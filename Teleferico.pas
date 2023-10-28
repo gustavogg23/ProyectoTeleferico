@@ -34,8 +34,6 @@ BEGIN
 				repeat
 					write('Por favor ingrese su nombre y apellido: ');
 					readln(nombre);
-					for contMayus:= 1 to length(nombre) do
-				
 					nombreValido:= True; 
 					for contNombre:= 1 to length(nombre) do // Bucle que pasa por cada caracter de la variable nombre
 					begin
@@ -51,7 +49,7 @@ BEGIN
 					end
 					else
 					begin
-						writeln('Bienvenido al telferico de Merida ', nombre, '!');
+						writeln('Bienvenido al teleferico de Merida ', nombre, '!');
 					end;
 				until nombreValido;
 				repeat
@@ -71,7 +69,35 @@ BEGIN
 						writeln('Identificacion Invalida.'); 
 					end;
 				until cedulaValida;
-				// vamos por aquí
+				clrscr;
+				writeln('El teleferico de Merida esta dividido en las siguientes 5 estaciones y 4 tramos:');
+				writeln();
+				writeln('|-------------------------|');
+				writeln('|-------Estaciones--------|');
+				writeln('|-------------------------|');
+				writeln('| - Barinitas             |');
+				writeln('| - La Montaña           |');
+				writeln('| - La Aguada             |');
+				writeln('| - Loma Redonda          |');
+				writeln('| - Pico Espejo           |');
+				writeln('|-------------------------|');
+				gotoxy(30, 3);
+				writeln('|------------------------------|');
+				gotoxy(30, 4);
+				writeln('|------------Tramos------------|');
+				gotoxy(30, 5);
+				writeln('|------------------------------|');
+				gotoxy(30, 6);
+				writeln('| - Barinitas - La Montaña    |');
+				gotoxy(30, 7);
+				writeln('| - La Montaña - La Aguada    |');
+				gotoxy(30, 8);
+				writeln('| - La Aguada - Loma Redonda   |');
+				gotoxy(30, 9);
+				writeln('| - Loma Redonda - Pico Espejo |');
+				gotoxy(30, 10);
+				writeln('|------------------------------|');
+				// vamos por aqui
 				readln();
 			end;
 			'2': begin

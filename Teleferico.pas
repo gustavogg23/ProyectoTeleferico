@@ -9,8 +9,8 @@ var
 	nombre, cedula, estacion, tramo: string;
 	opcion: char;
 	numeroBoletos, bltosVendidosGeneral, bltosVendidos3raEdadNinos, asientosDisponibles: integer;
-	contMayus, contNombre, contCedula: integer;
-	nombreValido, cedulaValida: boolean;
+	i, contNombre, contCedula, contEstacion: integer;
+	nombreValido, cedulaValida, estacionValida: boolean;
 	precioGeneral, precio3raEdad: real;
 
 BEGIN
@@ -23,7 +23,7 @@ BEGIN
 			clrscr;
 			writeln('Teleferico de Merida');
 			writeln();
-			writeln('Ingrese la opcion que desee.');
+			writeln('---------Menu----------');
 			writeln('1. Comprar boletos');
 			writeln('2. Ver Sistema');
 			writeln('3. Salir');
@@ -72,32 +72,58 @@ BEGIN
 				clrscr;
 				writeln('El teleferico de Merida esta dividido en las siguientes 5 estaciones y 4 tramos:');
 				writeln();
-				writeln('|-------------------------|');
+				writeln('|-------------------------|'); // Imprime la lista de estaciones
 				writeln('|-------Estaciones--------|');
 				writeln('|-------------------------|');
 				writeln('| - Barinitas             |');
-				writeln('| - La Montaña           |');
+				writeln('| - La Montana            |');
 				writeln('| - La Aguada             |');
 				writeln('| - Loma Redonda          |');
 				writeln('| - Pico Espejo           |');
 				writeln('|-------------------------|');
 				gotoxy(30, 3);
-				writeln('|------------------------------|');
+				writeln('|------------------------------|');  // Imprime la lista de tramos
 				gotoxy(30, 4);
 				writeln('|------------Tramos------------|');
 				gotoxy(30, 5);
 				writeln('|------------------------------|');
 				gotoxy(30, 6);
-				writeln('| - Barinitas - La Montaña    |');
+				writeln('| - Barinitas - La Montana     |');
 				gotoxy(30, 7);
-				writeln('| - La Montaña - La Aguada    |');
+				writeln('| - La Montana - La Aguada     |');
 				gotoxy(30, 8);
 				writeln('| - La Aguada - Loma Redonda   |');
 				gotoxy(30, 9);
 				writeln('| - Loma Redonda - Pico Espejo |');
 				gotoxy(30, 10);
 				writeln('|------------------------------|');
-				// vamos por aqui
+				writeln();
+				writeln();
+				repeat
+					write('Por favor seleccione la estacion en la que desea ingresar: '); // Pide al usuario que ingrese una estación
+					readln(estacion);
+					for i:= 1 to length(estacion) do  // Este bucle convierte la entrada a mayúsculas
+					begin
+						estacion[i]:= UpCase(estacion[i]);
+					end;
+					estacionValida:= True;
+					for contEstacion:= 1 to length(estacion) do  // Bucle para verificar si la entrada es válida
+					begin
+						if not (estacion[contEstacion] in ['A'..'Z', ' ']) then // La condición no maneja la letra 'ñ' o 'Ñ'
+						begin
+							estacionValida:= False;
+							break;
+						end;
+					end;            // Si la entrada no es válida o el usuario no ingresa una de las estaciones en la lista, se imprime un mensaje de error
+					if not estacionValida or (estacion <> 'BARINITAS') and (estacion <> 'LA MONTANA') and (estacion <> 'LA AGUADA') and (estacion <> 'LOMA REDONDA') and (estacion <> 'PICO ESPEJO') then
+					begin
+						writeln('La estacion que ha ingresado no es valida.');
+					end
+					else
+					begin
+						writeln('Ha seleccionado la estacion ', estacion); // Si la entrada es válida se imprime un mensaje de confirmación
+					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
+				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
 				readln();
 			end;
 			'2': begin
@@ -117,4 +143,3 @@ BEGIN
 		until (opcion = '1') or (opcion = '2') or (opcion = '3');	
 	end;
 END.
-

@@ -9,20 +9,20 @@ var
 	nombre, cedula, estacion, tramo: string;
 	opcion: char;
 	bltosVendidosGeneral, bltosVendidos3raEdadNinos, asientosDisponibles: integer;
-	contMayus, contNombre: integer;
-	nombreValido: boolean;
+	contMayus, contNombre, contCedula: integer;
+	nombreValido, cedulaValida: boolean;
 	precioGeneral, precio3raEdad: real;
 
 BEGIN
 	bltosVendidosGeneral:= 0;
 	bltosVendidos3raEdadNinos:= 0;
 	asientosDisponibles:= CAPACIDAD_MAX;
-	writeln('TELEFERICO DE MERIDA');
-	writeln();
 	while True do
 	begin
 		repeat
 			clrscr;
+			writeln('Teleferico de Merida');
+			writeln();
 			writeln('Ingrese la opcion que desee.');
 			writeln('1. Comprar boletos');
 			writeln('2. Ver Sistema');
@@ -53,9 +53,26 @@ BEGIN
 					end
 					else
 					begin
-						writeln('Bienvenido al telferico de Merida ', nombre);
+						writeln('Bienvenido al telferico de Merida ', nombre, '!');
 					end;
 				until nombreValido;
+				repeat
+					write('Por favor ingrese su cedula: ');
+					readln(cedula);
+					cedulaValida:= True;
+					for contCedula:= 1 to length(cedula) do
+					begin
+						if not (cedula[contCedula] in ['0'..'9', '.']) then // Verifica que la cédula solo contenga números y puntos
+						begin
+							cedulaValida:= False;
+							break;
+						end;
+					end;
+					if not cedulaValida then
+					begin
+						writeln('Identificacion Invalida.'); 
+					end;
+				until cedulaValida;
 				readln();
 			end;
 			'2': begin

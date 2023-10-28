@@ -8,7 +8,7 @@ const
 var	
 	nombre, cedula, estacion, tramo: string;
 	opcion: char;
-	bltosVendidosGeneral, bltosVendidos3raEdadNinos, asientosDisponibles: integer;
+	numeroBoletos, bltosVendidosGeneral, bltosVendidos3raEdadNinos, asientosDisponibles: integer;
 	contMayus, contNombre, contCedula: integer;
 	nombreValido, cedulaValida: boolean;
 	precioGeneral, precio3raEdad: real;
@@ -35,13 +35,11 @@ BEGIN
 					write('Por favor ingrese su nombre y apellido: ');
 					readln(nombre);
 					for contMayus:= 1 to length(nombre) do
-					begin
-						nombre[contMayus]:= UpCase(nombre[contMayus]); // Convierte el nombre a mayúsculas
-					end;
+				
 					nombreValido:= True; 
 					for contNombre:= 1 to length(nombre) do // Bucle que pasa por cada caracter de la variable nombre
 					begin
-						if not (nombre[contNombre] in ['A'..'Z', ' ']) then // Verifica que el nombre solo tiene letras y espacios
+						if not (nombre[contNombre] in ['A'..'Z', 'a'..'z', ' ']) then // Verifica que el nombre solo tiene letras y espacios
 						begin
 							nombreValido:= False; // En caso de que no se cumpla la condición, la variable se le asigan el valor False
 							break;                 
@@ -73,6 +71,7 @@ BEGIN
 						writeln('Identificacion Invalida.'); 
 					end;
 				until cedulaValida;
+				// vamos por aquí
 				readln();
 			end;
 			'2': begin

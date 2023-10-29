@@ -66,7 +66,7 @@ BEGIN
 					if not cedulaValida then
 					begin
 						writeln('Identificacion Invalida.'); 
-					end;
+					end; //vamos por aqui 
 				until cedulaValida;
 				clrscr;
 				writeln('El teleferico de Merida esta dividido en las siguientes 5 estaciones y 4 tramos:');

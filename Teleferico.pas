@@ -7,16 +7,15 @@ const
 	BOLETO_3RAEDAD_NINOS = 12;
 var	
 
-	nombre, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida: string;
+	nombre,apellido,  cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida,cbt3,cbtn: string;
 
 	opcion, opcionTramo: char;
-	numeroBoletos, bltosVendidosGeneral, bltosVendidos3raEdadNinos, asientosDisponibles: integer;
-	i, contNombre, contCedula, contEstacion: integer;
-	nombreValido, cedulaValida, estacionValida, continuar: boolean;
+	numeroBoletos, bltosVendidosGeneral, bltos3, asientosDisponibles,bltosN: integer;
+	i,contApellido, contNombre, contCedula, contEstacion: integer;
+	nombreValido, cedulaValida, estacionValida, continuar,apellidoValido: boolean;
 
 BEGIN
-	bltosVendidosGeneral:= 0;
-	bltosVendidos3raEdadNinos:= 0;
+	
 	asientosDisponibles:= CAPACIDAD_MAX;
 	while True do
 	begin
@@ -33,12 +32,12 @@ BEGIN
 			'1': begin
 				clrscr;
 				repeat
-					write('Por favor ingrese su nombre y apellido: ');
+					write('Por favor ingrese su nombre:  ');
 					readln(nombre);
 					nombreValido:= True; 
 					for contNombre:= 1 to length(nombre) do // Bucle que pasa por cada caracter de la variable nombre
 					begin
-						if not (nombre[contNombre] in ['A'..'Z', 'a'..'z', ' ']) then // Verifica que el nombre solo tiene letras y espacios
+						if not (nombre[contNombre] in ['A'..'Z', 'a'..'z']) then // Verifica que el nombre solo tiene letras y espacios
 						begin
 							nombreValido:= False; // En caso de que no se cumpla la condición, la variable se le asigan el valor False
 							break;                 
@@ -47,12 +46,29 @@ BEGIN
 					if not nombreValido then
 					begin
 						writeln('Nombre Invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
+					end;
+				until nombreValido;
+				repeat
+					write('Por favor ingrese su apellido:  '); 
+					readln(apellido);
+					apellidoValido:= True; 
+					for contApellido:= 1 to length(apellido) do // Bucle que pasa por cada caracter de la variable nombre
+					begin
+						if not (apellido[contApellido] in ['A'..'Z', 'a'..'z']) then // Verifica que el nombre solo tiene letras y espacios
+						begin
+							apellidoValido:= False; // En caso de que no se cumpla la condición, la variable se le asigan el valor False
+							break;                 
+						end;
+					end;
+					if not apellidoValido then
+					begin
+						writeln('Apellido  Invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
 					end
 					else
 					begin
-						writeln('Bienvenido al teleferico de Merida ', nombre, '!');
+						writeln('Bienvenido al teleferico de Merida ', nombre,' ',  apellido, '!'); 
 					end;
-				until nombreValido;
+				until apellidoValido;
 				repeat
 					write('Por favor ingrese su cedula: ');
 					readln(cedula);
@@ -128,6 +144,21 @@ BEGIN
 					estacionEntrada:= estacion; // Guarda en la variable la estación en la cual entra el usuario
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
 				Clrscr;
+				writeln('Cuantos boletos desea comprar?');
+				readln(numeroBoletos);
+				while  (numeroBoletos<1) or (numeroBoletos>CAPACIDAD_MAX) do
+				begin
+				    writeln('Numero de boletos invalidos, porfavor ingrese otro numero');
+				    readln(numeroBoletos);
+				end;
+			    writeln('que cantidad de adultos de tercera edad van a viajar?');
+			    readln(bltos3);
+			    if not (bltos3  in [0..9] ) then
+			    begin
+			        writeln('numero invalido');
+			    end;
+			    writeln('va a viajar con ninos?'); 
+			    writeln('ingrese la edad del nino');
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
 				while continuar do // El bucle se repite hasta que el usuario decida salir del teleférico
 				begin

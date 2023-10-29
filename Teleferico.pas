@@ -7,10 +7,10 @@ const
 	BOLETO_3RAEDAD_NINOS = 12;
 var	
 
-	nombre,apellido,  cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida,cbt3,cbtn: string;
+	nombre,apellido, numero, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida,cbt3,cbtn: string;
 
 	opcion, opcionTramo: char;
-	numeroBoletos, bltosVendidosGeneral, bltos3, asientosDisponibles,bltosN: integer;
+	numeroBoletos, bltosVendidosGeneral, bltos3, asientosDisponibles,bltosN,error: integer;
 	i,contApellido, contNombre, contCedula, contEstacion: integer;
 	nombreValido, cedulaValida, estacionValida, continuar,apellidoValido: boolean;
 
@@ -143,14 +143,16 @@ BEGIN
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
 					estacionEntrada:= estacion;
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
+				repeat 
 				Clrscr;
 				writeln('Cuantos boletos desea comprar?');
-				readln(numeroBoletos);
-				while  (numeroBoletos<1) or (numeroBoletos>CAPACIDAD_MAX) do
+				readln(numero);
+				val(numero, numeroBoletos, error);
+				if (error <> 0) then
 				begin
-				    writeln('Numero de boletos invalidos, porfavor ingrese otro numero');
-				    readln(numeroBoletos);
-				end;
+				writeln('numero de boletos invalidos:');
+				end
+				until(error = 0) and (numeroBoletos > 1) or (numeroBoletos < CAPACIDAD_MAX);
 			    writeln('que cantidad de adultos de tercera edad van a viajar?');
 			    readln(bltos3);
 			    if not (bltos3  in [0..9] ) then

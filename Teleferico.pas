@@ -125,7 +125,7 @@ BEGIN
 						writeln('Ha seleccionado la estacion ', estacion); // Si la entrada es válida se imprime un mensaje de confirmación
 						readln();
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
-					estacionEntrada:= estacion;
+					estacionEntrada:= estacion; // Guarda en la variable la estación en la cual entra el usuario
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
 				Clrscr;
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
@@ -172,7 +172,7 @@ BEGIN
 							writeln('Por favor elija que tramo desea recorrer.');
 							writeln('1. Tramo: La Montana - La Aguada'); // Opción de tramo que avanza a la siguiente estación
 							writeln('2. Regresar a la estacion anterior'); // Opción de tramo que regresa a la estación anterior
-							writeln('3.salir de la estacion');
+							writeln('3. Salir de la estacion');
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -206,7 +206,7 @@ BEGIN
 							writeln('Por favor elija que tramo desea recorrer.');
 							writeln('1. Tramo: La Aguada - Loma Redonda');
 							writeln('2. Regresar a la estacion anterior');
-							writeln('3. salir de la estacion');
+							writeln('3. Salir de la estacion');
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -240,7 +240,7 @@ BEGIN
 							writeln('Por favor elija que tramo desea recorrer.');
 							writeln('1. Tramo: Loma Redonda - Pico Espejo');
 							writeln('2. Regresar a la estacion anterior');
-							writeln('3. salir de la estacion');
+							writeln('3. Salir de la estacion');
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -272,7 +272,7 @@ BEGIN
 							writeln('Estacion Pico Espejo');
 							writeln();
 							writeln('1. Regresar a la estacion anterior'); // En esta estación el usuario solo puede usar el tramo que conduce a la estación anterior
-							writeln('2. salir de la estacion');
+							writeln('2. Salir de la estacion');
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin

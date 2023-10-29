@@ -6,12 +6,11 @@ const
 	BOLETO_GRAL = 20;
 	BOLETO_3RAEDAD_NINOS = 12;
 var	
-	nombre, cedula, estacion, tramo: string;
-	opcion: char;
+	nombre, cedula, estacion, estacionAnterior: string;
+	opcion, opcionTramo: char;
 	numeroBoletos, bltosVendidosGeneral, bltosVendidos3raEdadNinos, asientosDisponibles: integer;
 	i, contNombre, contCedula, contEstacion: integer;
-	nombreValido, cedulaValida, estacionValida: boolean;
-	precioGeneral, precio3raEdad: real;
+	nombreValido, cedulaValida, estacionValida, continuar: boolean;
 
 BEGIN
 	bltosVendidosGeneral:= 0;
@@ -124,6 +123,119 @@ BEGIN
 						writeln('Ha seleccionado la estacion ', estacion); // Si la entrada es válida se imprime un mensaje de confirmación
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
+				Clrscr;
+				continuar:= True;
+				while continuar do
+				begin
+					if (estacion = 'BARINITAS') then
+					begin
+						Clrscr;
+						writeln('Bienvenido a la estacion Barinitas');
+						writeln();
+						writeln('Elija la opcion que desee.');
+						writeln('1. Tramo: Barinitas - La Montana');
+						writeln('2. Salir del teleferico');
+						readln(opcionTramo);
+						case opcionTramo of
+						'1': begin
+							estacion:= 'LA MONTANA';
+						end;
+						'2': begin
+							writeln('Gracias por usar el telferico de Merida');
+							writeln('Por favor vuelva pronto');
+							continuar:= False;
+						end
+						else
+						begin
+							writeln('Opcion invalida.');
+						end;
+						end;
+					end;
+					if (estacion = 'LA MONTANA') then
+					begin
+						estacionAnterior:= 'BARINITAS';
+						Clrscr;
+						writeln('Bienvenido a la estacion La Montana');
+						writeln();
+						writeln('Por favor elija que tramo desea recorrer.');
+						writeln('1. Tramo: La Montana - La Aguada');
+						writeln('2. Regresar a la estacion anterior');
+						readln(opcionTramo);
+						case opcionTramo of
+						'1': begin
+							estacion:= 'LA AGUADA';
+						end;
+						'2': begin
+							estacion:= estacionAnterior;
+						end
+						else
+						begin
+							writeln('Opcion invalida.');
+						end;
+						end;
+					end;
+					if (estacion = 'LA AGUADA') then
+					begin 
+						Clrscr;
+						writeln('Bienevenido a la estacion La Aguada');
+						writeln();
+						writeln('Por favor elija que tramo desea recorrer.');
+						writeln('1. Tramo: La Aguada - Loma Redonda');
+						writeln('2. Regresar a la estacion anterior');
+						readln(opcionTramo);
+						case opcionTramo of
+						'1': begin
+							estacion:= 'LOMA REDONDA';
+						end;
+						'2': begin
+							estacion:= 'LA MONTANA';
+						end
+						else
+						begin
+							writeln('Opcion invalida.');
+						end;
+						end;
+					end;
+					if (estacion = 'LOMA REDONDA') then
+					begin 
+						Clrscr;
+						writeln('Bienevenido a la estacion Loma Redonda');
+						writeln();
+						writeln('Por favor elija que tramo desea recorrer.');
+						writeln('1. Tramo: Loma Redonda - Pico Espejo');
+						writeln('2. Regresar a la estacion anterior');
+						readln(opcionTramo);
+						case opcionTramo of
+						'1': begin
+							estacion:= 'PICO ESPEJO';
+						end;
+						'2': begin
+							estacion:= 'LA AGUADA';
+						end
+						else
+						begin
+							writeln('Opcion invalida.');
+						end;
+						end;
+					end;
+					if ( estacion = 'PICO ESPEJO') then
+					begin
+						Clrscr;
+						writeln('Bienvenido a la estacion Pico Espejo');
+						writeln();
+						writeln('1. Regresar a la estacion anterior');
+						readln(opcionTramo);
+						case opcionTramo of
+						'1': begin
+							estacion:= 'LOMA REDONDA';
+						end
+						else
+						begin
+							writeln('Opcion invalida.');
+						end;
+						end;
+					end;
+				end;
 				readln();
 			end;
 			'2': begin

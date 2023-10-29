@@ -156,7 +156,7 @@ BEGIN
 				until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= CAPACIDAD_MAX)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
 			    repeat
 					Clrscr;
-					writeln('cuantos adultos de tercera edad van a viajar?');
+					write('Cuantos adultos de tercera edad van a viajar? ');
 					readln(nroMayores);
 					Val(nroMayores, bltos3Edad, errorEntrada); 
 					if (errorEntrada <> 0) or ((bltos3Edad > numeroBoletos) or (bltos3Edad > CAPACIDAD_MAX)) or (bltos3Edad < 1) then 

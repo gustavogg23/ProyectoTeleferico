@@ -125,6 +125,7 @@ BEGIN
 						writeln('Ha seleccionado la estacion ', estacion); // Si la entrada es válida se imprime un mensaje de confirmación
 						readln();
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
+					estacionEntrada:= estacion;
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
 				Clrscr;
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
@@ -132,7 +133,7 @@ BEGIN
 				begin
 					if (estacion = 'BARINITAS') then  // Si el usuario elige la estación Barinitas, puede elegir el tramo que avanza a la siguiente estación o salir del teleférico
 					begin
-					    estacionEntrada:= 'BARINITAS';
+					    
 						repeat  // Se repite hasta que el usuario elija una opción válida
 							Clrscr;
 							writeln('Estacion Barinitas');
@@ -162,7 +163,7 @@ BEGIN
 					end;
 					if (estacion = 'LA MONTANA') then // Desde esta estación el usuario puede elegir entre dos tramos
 					begin
-					    estacionEntrada:= 'LA MONTANA';
+					    
 						repeat
 							estacionAnterior:= 'BARINITAS'; // Asigna el nombre de la estación anterior a la variable
 							Clrscr;
@@ -197,7 +198,7 @@ BEGIN
 					end;
 					if (estacion = 'LA AGUADA') then
 					begin 
-					    estacionEntrada:= 'LA AGUADA';
+					    
 						repeat
 							Clrscr;
 							writeln('Estacion La Aguada');
@@ -231,7 +232,7 @@ BEGIN
 					end;
 					if (estacion = 'LOMA REDONDA') then
 					begin 
-					    estacionEntrada:= 'LOMAS REDONDA';
+					    
 						repeat
 							Clrscr;
 							writeln('Estacion Loma Redonda');
@@ -265,7 +266,7 @@ BEGIN
 					end;
 					if ( estacion = 'PICO ESPEJO') then
 					begin
-					    estacionEntrada:='PICO ESPEJO';
+					    
 						repeat
 							Clrscr;
 							writeln('Estacion Pico Espejo');
@@ -292,6 +293,7 @@ BEGIN
 							end;
 						until (opcionTramo = '1')or (opcionTramo = '2');
 					end;
+					writeln('Estacion de entrada: ', estacionEntrada , ' Estacion de salida: ', estacionSalida);
 				end;
 				readln();
 			end;

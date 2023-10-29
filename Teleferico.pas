@@ -7,11 +7,10 @@ const
 	BOLETO_3RAEDAD_NINOS = 12;
 var	
 
-	nombre,apellido,  cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida,cbt3,cbtn: string;
-
+	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida, nroEntrada, nroMayores, nroMenores: string;
 	opcion, opcionTramo: char;
-	numeroBoletos, bltosVendidosGeneral, bltos3, asientosDisponibles,bltosN: integer;
-	i,contApellido, contNombre, contCedula, contEstacion: integer;
+	numeroBoletos, bltosVendidosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada: integer;
+	i, contApellido, contNombre, contCedula, contEstacion: integer;
 	nombreValido, cedulaValida, estacionValida, continuar,apellidoValido: boolean;
 
 BEGIN
@@ -32,7 +31,7 @@ BEGIN
 			'1': begin
 				clrscr;
 				repeat
-					write('Por favor ingrese su nombre:  ');
+					write('Por favor ingrese su nombre: ');
 					readln(nombre);
 					nombreValido:= True; 
 					for contNombre:= 1 to length(nombre) do // Bucle que pasa por cada caracter de la variable nombre
@@ -49,7 +48,7 @@ BEGIN
 					end;
 				until nombreValido;
 				repeat
-					write('Por favor ingrese su apellido:  '); 
+					write('Por favor ingrese su apellido: '); 
 					readln(apellido);
 					apellidoValido:= True; 
 					for contApellido:= 1 to length(apellido) do // Bucle que pasa por cada caracter de la variable nombre
@@ -62,11 +61,11 @@ BEGIN
 					end;
 					if not apellidoValido then
 					begin
-						writeln('Apellido  Invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
+						writeln('Apellido Invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
 					end
 					else
 					begin
-						writeln('Bienvenido al teleferico de Merida ', nombre,' ',  apellido, '!'); 
+						writeln('Bienvenido al teleferico de Merida ', nombre, ' ', apellido, '!'); 
 					end;
 				until apellidoValido;
 				repeat
@@ -84,7 +83,7 @@ BEGIN
 					if not cedulaValida then
 					begin
 						writeln('Identificacion Invalida.'); 
-					end; //vamos por aqui 
+					end; 
 				until cedulaValida;
 				clrscr;
 				writeln('El teleferico de Merida esta dividido en las siguientes 5 estaciones y 4 tramos:');
@@ -143,22 +142,19 @@ BEGIN
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
 					estacionEntrada:= estacion; // Guarda en la variable la estación en la cual entra el usuario
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
-				Clrscr;
-				writeln('Cuantos boletos desea comprar?');
-				readln(numeroBoletos);
-				while  (numeroBoletos<1) or (numeroBoletos>CAPACIDAD_MAX) do
-				begin
-				    writeln('Numero de boletos invalidos, porfavor ingrese otro numero');
-				    readln(numeroBoletos);
-				end;
-			    writeln('que cantidad de adultos de tercera edad van a viajar?');
-			    readln(bltos3);
-			    if not (bltos3  in [0..9] ) then
-			    begin
-			        writeln('numero invalido');
-			    end;
-			    writeln('va a viajar con ninos?'); 
-			    writeln('ingrese la edad del nino');
+				repeat
+					Clrscr;
+					writeln('Cuantos boletos desea comprar?');
+					readln(nroEntrada);
+					Val(nroEntrada, numeroBoletos, errorEntrada); // Intenta convertir la entrada del usuario a un número entero
+					if (errorEntrada <> 0) or ((numeroBoletos < 1) or (numeroBoletos > 60)) then // Si la entrada no es un número o el número es menor a 1 o mayor a 60, imprime un mensaje de error
+					begin
+						writeln('Entrada invalida.');
+						readln();
+						errorEntrada:= 1;
+					end;
+				until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= 60)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
+			    // vamos por aquí
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
 				while continuar do // El bucle se repite hasta que el usuario decida salir del teleférico
 				begin
@@ -324,7 +320,8 @@ BEGIN
 							end;
 						until (opcionTramo = '1')or (opcionTramo = '2');
 					end;
-					writeln('Estacion de entrada: ', estacionEntrada , ' Estacion de salida: ', estacionSalida);
+					writeln('Estacion de entrada: ', estacionEntrada);
+					writeln('Estacion de salida: ', estacionSalida);
 				end;
 				readln();
 			end;

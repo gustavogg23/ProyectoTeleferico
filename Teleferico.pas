@@ -9,7 +9,7 @@ var
 
 	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida, nroEntrada, nroMayores, nroMenores: string;
 	opcion, opcionTramo: char;
-	numeroBoletos, bltosVendidosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada: integer;
+	numeroBoletos, bltosVendidosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest: integer;
 	i, contApellido, contNombre, contCedula, contEstacion: integer;
 	nombreValido, cedulaValida, estacionValida, continuar,apellidoValido: boolean;
 
@@ -153,19 +153,35 @@ BEGIN
 						readln();
 						errorEntrada:= 1;
 					end;
+				
 				until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= CAPACIDAD_MAX)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
+			    bltosRest:=numeroBoletos;
 			    repeat
 					Clrscr;
 					writeln('cuantos adultos de tercera edad van a viajar?');
 					readln(nroMayores);
 					Val(nroMayores, bltos3Edad, errorEntrada); 
-					if (errorEntrada <> 0) or ((bltos3Edad > numeroBoletos) or (bltos3Edad > CAPACIDAD_MAX)) or (bltos3Edad < 1) then 
+					if (errorEntrada <> 0) or ((bltos3Edad > numeroBoletos) or (bltos3Edad > CAPACIDAD_MAX)) or (bltos3Edad < 0) then 
 					begin
 						writeln('Entrada invalida.');
 						readln();
 						errorEntrada:= 1;
 					end;
-				until (errorEntrada = 0) and ((bltos3Edad >= 1) and (bltos3Edad <= CAPACIDAD_MAX)) and (bltos3Edad <= numeroBoletos);
+				until (errorEntrada = 0) and ((bltos3Edad >= 1) and (bltos3Edad <= bltosRest));	
+				bltosRest:= numeroBoletos - bltos3Edad; // se actualiza variable para limitar el numero de entrada de mayores y menores que puede ingresar el usuario
+				repeat
+					Clrscr;
+					writeln('cuantos ninos van a viajar?');
+					readln(nroMenores);
+					Val(nroMenores, bltosMenores, errorEntrada); 
+					if (errorEntrada <> 0) or ((bltosMenores > bltosRest) or (bltosMenores > CAPACIDAD_MAX)) or (bltosMenores < 0 ) then 
+					begin
+						writeln('Entrada invalida.');
+						readln();
+						errorEntrada:= 1;
+					end;
+				
+				until (errorEntrada = 0) and ((bltosMenores >= 1) and (bltosMenores <= bltosRest));
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
 				while continuar do // El bucle se repite hasta que el usuario decida salir del teleférico
 				begin

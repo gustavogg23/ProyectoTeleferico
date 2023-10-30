@@ -307,13 +307,14 @@ BEGIN
 							end;
 						until (opcionTramo = '1')or (opcionTramo = '2');
 					end;
-					writeln('Estacion de entrada: ', estacionEntrada);
-					writeln('Estacion de salida: ', estacionSalida);
-					readln();
 				end;
+				writeln('Estacion de entrada: ', estacionEntrada);
+				writeln('Estacion de salida: ', estacionSalida);
+				readln();
 				
 				Clrscr;
 				writeln('Asientos Disponibles para este viaje: ', asientosDisponibles); // Imprime el número de asientos que quedan antes de cada viaje
+				readln();
 				if (asientosDisponibles = 0) then // Si no quedan asientos disponibles imprime un mensaje diciéndole al usuario que no puede ingresar en el viaje
 			    begin
 					writeln('Este viaje ya no cuenta con mas asientos disponibles, por favor espere por el siguiente viaje.');
@@ -333,11 +334,11 @@ BEGIN
 							Clrscr;
 							errorEntrada:= 1;
 						end;
-					until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= CAPACIDAD_MAX)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
+					until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= asientosDisponibles)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
 					
 					bltosRest:= numeroBoletos;
 					bltosGeneral:= numeroBoletos;
-					asientosDisponibles:= CAPACIDAD_MAX - numeroBoletos;
+					asientosDisponibles:= asientosDisponibles - numeroBoletos;
 				   
 					repeat
 						writeln('Va a viajar con adultos de la 3ra Edad y/o niños? (s/n)');

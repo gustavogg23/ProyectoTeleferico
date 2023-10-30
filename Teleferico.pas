@@ -6,10 +6,11 @@ const
 	BOLETO_GRAL = 20;
 	BOLETO_3RAEDAD_NINOS = 12;
 var	
-	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida, nroEntrada, nroMayores, nroMenores, opcionEntrada: string;
+	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida: string;
+	nroEntrada, nroMayores, nroMenores, opcionEntrada, edadEntrada: string;
 	opcion, opcionTramo: char;
-	numeroBoletos, bltosVendidosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest: integer;
-	i, j, contApellido, contNombre, contCedula, contEstacion, contOpcion: integer;
+	numeroBoletos, bltosVendidosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: integer;
+	i, j, k, contApellido, contNombre, contCedula, contEstacion, contOpcion, cont3a12, contMenor3: integer;
 	nombreValido, cedulaValida, estacionValida, continuar, apellidoValido, opcionValida: boolean;
 
 BEGIN
@@ -199,13 +200,41 @@ BEGIN
 						write('Cuantos niños van a viajar? ');
 						readln(nroMenores);
 						Val(nroMenores, bltosMenores, errorEntrada); 
-						if (errorEntrada <> 0) or ((bltosMenores > bltosRest) or (bltosMenores < 0 )) then 
+						if (errorEntrada <> 0) or ((bltosMenores > bltosRest) or (bltosMenores < 0 )) then // Verifica que el número de niños no sea mayor al número de boletos restantes
 						begin
 							writeln('Entrada invalida.');
 							readln();
 							errorEntrada:= 1;
 						end;
 					until (errorEntrada = 0) and ((bltosMenores >= 0) and (bltosMenores <= bltosRest));
+					if (bltosMenores > 0) then // Si hay niños entonces se verifican las edades de los niños que vana viajar
+					begin
+						cont3a12:= 0; // Contador para niños entre 3 y 12 años
+						contMenor3:= 0; // Contador para niños menores a 3 años
+						for k:= 1 to bltosMenores do // El bucle le pide al usuario la edad de cada niño 
+						begin
+							repeat
+								Clrscr;
+								write('Ingrese la edad del niño ', k, ': ');
+								readln(edadEntrada);
+								Val(edadEntrada, edadMenores, errorEntrada);
+								if (errorEntrada <> 0) or ((edadMenores < 0) or (edadMenores > 12)) then // Verifica que la entrada del usuario sea un número y además sea positivo y no mayor de 12
+								begin
+									writeln('Edad invalida.');
+									readln();
+									errorEntrada:= 1;
+								end;
+							until (errorEntrada = 0) and ((edadMenores >= 3) and (edadMenores <= 12) or (edadMenores < 3));
+							if (edadMenores >= 3) and (edadMenores <= 12) then
+							begin
+								cont3a12:= cont3a12 + 1; // Incrementa el contador por cada niño entre 3 y 12 años
+							end
+							else if (edadMenores < 3) then
+							begin
+								contMenor3:= contMenor3 + 1; // Incrementa el contador por cada niño menor a 3 años
+							end;
+						end;
+					end;
 				end;
 				
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos

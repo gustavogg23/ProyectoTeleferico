@@ -10,7 +10,7 @@ var
 	numeroBoletos, bltosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: integer; 
 	totalBltos, totalAcumulado, totalBltosGral, totalBltos3Edad, totalBltos3a12, totalBltosMenor3: integer;
 	i, j, k, contApellido, contNombre, contCedula, contEstacion, cont3a12, contMenor3: integer;
-	totalGeneral, total3Edad, totalMenores, total: real;
+	totalGeneral, total3Edad, totalMenores, total, ventasGral, ventas3Edad, ventas3a12, ventasTotal: real;
 	nombreValido, cedulaValida, estacionValida, continuar, apellidoValido: boolean;
 
 BEGIN
@@ -21,6 +21,11 @@ BEGIN
 	totalBltos3Edad:= 0;
 	totalBltos3a12:= 0;
 	totalBltosMenor3:= 0;
+	// Se inicializan varibales para almacenar el total de ventas de cada tipo de boleto
+	ventasGral:= 0;
+	ventas3Edad:= 0;
+	ventas3a12:= 0;
+	ventasTotal:= 0;
 	
 	while True do
 	begin
@@ -443,16 +448,29 @@ BEGIN
 				totalBltos3Edad:= totalBltos3Edad + bltos3Edad;
 				totalBltos3a12:= totalBltos3a12 + cont3a12;
 				totalBltosMenor3:= totalBltosMenor3 + contMenor3;
-				total:= totalGeneral + total3Edad + totalMenores;
+				// Se calculan las ventas totales para cada tipo de boleto y y las ventas totales
+				ventasGral:= ventasGral + totalGeneral;
+				ventas3Edad:= ventas3Edad + total3Edad;
+				ventas3a12:= ventas3a12 + totalMenores;
+				ventasTotal:= ventasTotal + total;
 			end;
 			'2': begin
 				Clrscr;
+				// Se imprimen el número de boletos que se han vendido de cada tipo y en total
 				writeln('Total de boletos vendidos: ', totalAcumulado);
 				writeln('Boletos Generales vendidos: ', totalBltosGral);
 				writeln('Boletos de 3ra Edad vendidos: ', totalBltos3Edad);
 				writeln('Boletos de niños vendidos: ', totalBltos3a12);
 				writeln('Boletos de niños menores a 3 años: ', totalBltosMenor3);
+				writeln();
+				// Se imprime el número de asientos disponibles para el viaje
 				writeln('Asientos Disponibles: ', asientosDisponibles);
+				writeln();
+				// Se imprimen las ventas generadas por cada tipo de boletos comprado y el total de todas las ventas
+				writeln('Ventas de Boletos Generales: ', ventasGral:0:2);
+				writeln('Ventas de Boletos de 3ra Edad: ', ventas3Edad:0:2);
+				writeln('Ventas de Boletos de Niños entre 3 y 12 años: ', ventas3a12:0:2);
+				writeln('Ventas Totales: ', ventasTotal:0:2);
 				readln();
 			end;
 			'3': begin

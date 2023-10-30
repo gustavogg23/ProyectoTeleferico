@@ -311,116 +311,123 @@ BEGIN
 					writeln('Estacion de salida: ', estacionSalida);
 					readln();
 				end;
-		
-				repeat
-					Clrscr;
-					writeln('Cuantos boletos desea comprar?');
-					readln(nroEntrada);
-					Val(nroEntrada, numeroBoletos, errorEntrada); // Intenta convertir la entrada del usuario a un número entero
-					if (errorEntrada <> 0) or ((numeroBoletos < 1) or (numeroBoletos > CAPACIDAD_MAX)) then // Si la entrada no es un número o el número es menor a 1 o mayor a 60, imprime un mensaje de error
-					begin
-						writeln('Entrada invalida.');
-						readln();
-						Clrscr;
-						errorEntrada:= 1;
-					end;
-				until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= CAPACIDAD_MAX)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
 				
-			    bltosRest:= numeroBoletos;
-			    bltosGeneral:= numeroBoletos;
-			    asientosDisponibles:= CAPACIDAD_MAX - numeroBoletos;
-			    
-			    repeat
-					writeln('Va a viajar con adultos de la 3ra Edad y/o niños? (s/n)');
-					readln(opcionEntrada);
-					for j:= 1 to length(opcionEntrada) do
-					begin
-						opcionEntrada[j]:= UpCase(opcionEntrada[j]); // Convierte la entrada en mayúsculas
-					end;
-					if (opcionEntrada <> 'S') and (opcionEntrada <> 'N') and (opcionEntrada <> 'SI') and (opcionEntrada <> 'NO') then // Se verifica si la entrada es válida
-					begin
-						writeln('Opcion invalida.');
-						readln();
-						Clrscr;
-					end;
-			    until (opcionEntrada = 'S') or (opcionEntrada = 'N') or (opcionEntrada = 'SI') or (opcionEntrada = 'NO'); // El bucle se repite hasta que la entrada sea válida
-			    
-			    if (opcionEntrada = 'S') or (opcionEntrada = 'SI') then // Si la entrada del usuario es 's' o 'si' procede a preguntar por el número de adultos mayores y niños 
+				Clrscr;
+				writeln('Asientos Disponibles para este viaje: ', asientosDisponibles); // Imprime el número de asientos que quedan antes de cada viaje
+				if (asientosDisponibles = 0) then // Si no quedan asientos disponibles imprime un mensaje diciéndole al usuario que no puede ingresar en el viaje
 			    begin
+					writeln('Este viaje ya no cuenta con mas asientos disponibles, por favor espere por el siguiente viaje.');
+					readln();
+			    end
+				else
+				begin
 					repeat
 						Clrscr;
-						write('Cuantos adultos de tercera edad van a viajar? ');
-						readln(nroMayores);
-						Val(nroMayores, bltos3Edad, errorEntrada); // Convierte la entrada a un entero pata verificar si la entrada es un número
-						if (errorEntrada <> 0) or (bltos3Edad > numeroBoletos) or (bltos3Edad < 0) then // Si la entrada no es un número o el número es mayor al número de boletos que el usuario ingresó antes, o es negativo se imprime un error
+						writeln('Cuantos boletos desea comprar?');
+						readln(nroEntrada);
+						Val(nroEntrada, numeroBoletos, errorEntrada); // Intenta convertir la entrada del usuario a un número entero
+						if (errorEntrada <> 0) or ((numeroBoletos < 1) or (numeroBoletos > asientosDisponibles)) then // Si la entrada no es un número o el número es menor a 1 o mayor a 60, imprime un mensaje de error
 						begin
 							writeln('Entrada invalida.');
 							readln();
+							Clrscr;
 							errorEntrada:= 1;
 						end;
-					until (errorEntrada = 0) and ((bltos3Edad >= 0) and (bltos3Edad <= numeroBoletos)); // El bucle se repite hasta que se ingrese un número válido
+					until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= CAPACIDAD_MAX)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
 					
-					bltosRest:= numeroBoletos - bltos3Edad; // Se actualiza variable para limitar el numero de entradas de niños que puede ingresar el usuario
-					
+					bltosRest:= numeroBoletos;
+					bltosGeneral:= numeroBoletos;
+					asientosDisponibles:= CAPACIDAD_MAX - numeroBoletos;
+				   
 					repeat
-						Clrscr;
-						write('Cuantos niños van a viajar? ');
-						readln(nroMenores);
-						Val(nroMenores, bltosMenores, errorEntrada); 
-						if (errorEntrada <> 0) or ((bltosMenores > bltosRest) or (bltosMenores < 0 )) then // Verifica que el número de niños no sea mayor al número de boletos restantes
+						writeln('Va a viajar con adultos de la 3ra Edad y/o niños? (s/n)');
+						readln(opcionEntrada);
+						for j:= 1 to length(opcionEntrada) do
 						begin
-							writeln('Entrada invalida.');
-							readln();
-							errorEntrada:= 1;
+							opcionEntrada[j]:= UpCase(opcionEntrada[j]); // Convierte la entrada en mayúsculas
 						end;
-					until (errorEntrada = 0) and ((bltosMenores >= 0) and (bltosMenores <= bltosRest));
-					bltosGeneral:= bltosGeneral - bltos3Edad - bltosMenores;
+						if (opcionEntrada <> 'S') and (opcionEntrada <> 'N') and (opcionEntrada <> 'SI') and (opcionEntrada <> 'NO') then // Se verifica si la entrada es válida
+						begin
+							writeln('Opcion invalida.');
+							readln();
+							Clrscr;
+						end;
+					until (opcionEntrada = 'S') or (opcionEntrada = 'N') or (opcionEntrada = 'SI') or (opcionEntrada = 'NO'); // El bucle se repite hasta que la entrada sea válida
 					
-					if (bltosMenores > 0) then // Si hay niños entonces se verifican las edades de los niños que vana viajar
+					if (opcionEntrada = 'S') or (opcionEntrada = 'SI') then // Si la entrada del usuario es 's' o 'si' procede a preguntar por el número de adultos mayores y niños 
 					begin
-						cont3a12:= 0; // Contador para niños entre 3 y 12 años
-						contMenor3:= 0; // Contador para niños menores a 3 años
-						for k:= 1 to bltosMenores do // El bucle le pide al usuario la edad de cada niño 
+						repeat
+							Clrscr;
+							write('Cuantos adultos de tercera edad van a viajar? ');
+							readln(nroMayores);
+							Val(nroMayores, bltos3Edad, errorEntrada); // Convierte la entrada a un entero pata verificar si la entrada es un número
+							if (errorEntrada <> 0) or (bltos3Edad > numeroBoletos) or (bltos3Edad < 0) then // Si la entrada no es un número o el número es mayor al número de boletos que el usuario ingresó antes, o es negativo se imprime un error
+							begin
+								writeln('Entrada invalida.');
+								readln();
+								errorEntrada:= 1;
+							end;
+						until (errorEntrada = 0) and ((bltos3Edad >= 0) and (bltos3Edad <= numeroBoletos)); // El bucle se repite hasta que se ingrese un número válido
+						
+						bltosRest:= numeroBoletos - bltos3Edad; // Se actualiza variable para limitar el numero de entradas de niños que puede ingresar el usuario
+						
+						repeat
+							Clrscr;
+							write('Cuantos niños van a viajar? ');
+							readln(nroMenores);
+							Val(nroMenores, bltosMenores, errorEntrada); 
+							if (errorEntrada <> 0) or ((bltosMenores > bltosRest) or (bltosMenores < 0 )) then // Verifica que el número de niños no sea mayor al número de boletos restantes
+							begin
+								writeln('Entrada invalida.');
+								readln();
+								errorEntrada:= 1;
+							end;
+						until (errorEntrada = 0) and ((bltosMenores >= 0) and (bltosMenores <= bltosRest));
+						bltosGeneral:= bltosGeneral - bltos3Edad - bltosMenores;
+						
+						if (bltosMenores > 0) then // Si hay niños entonces se verifican las edades de los niños que vana viajar
 						begin
-							repeat
-								Clrscr;
-								write('Ingrese la edad del niño ', k, ': ');
-								readln(edadEntrada);
-								Val(edadEntrada, edadMenores, errorEntrada);
-								if (errorEntrada <> 0) or ((edadMenores < 0) or (edadMenores > 12)) then // Verifica que la entrada del usuario sea un número y además sea positivo y no mayor de 12
+							cont3a12:= 0; // Contador para niños entre 3 y 12 años
+							contMenor3:= 0; // Contador para niños menores a 3 años
+							for k:= 1 to bltosMenores do // El bucle le pide al usuario la edad de cada niño 
+							begin
+								repeat
+									Clrscr;
+									write('Ingrese la edad del niño ', k, ': ');
+									readln(edadEntrada);
+									Val(edadEntrada, edadMenores, errorEntrada);
+									if (errorEntrada <> 0) or ((edadMenores < 0) or (edadMenores > 12)) then // Verifica que la entrada del usuario sea un número y además sea positivo y no mayor de 12
+									begin
+										writeln('Edad invalida.');
+										readln();
+										errorEntrada:= 1;
+									end;
+								until (errorEntrada = 0) and ((edadMenores >= 3) and (edadMenores <= 12) or (edadMenores < 3));
+								if (edadMenores >= 3) and (edadMenores <= 12) then
 								begin
-									writeln('Edad invalida.');
-									readln();
-									errorEntrada:= 1;
+									cont3a12:= cont3a12 + 1; // Incrementa el contador por cada niño entre 3 y 12 años
+								end
+								else if (edadMenores < 3) then
+								begin
+									contMenor3:= contMenor3 + 1; // Incrementa el contador por cada niño menor a 3 años
 								end;
-							until (errorEntrada = 0) and ((edadMenores >= 3) and (edadMenores <= 12) or (edadMenores < 3));
-							if (edadMenores >= 3) and (edadMenores <= 12) then
-							begin
-								cont3a12:= cont3a12 + 1; // Incrementa el contador por cada niño entre 3 y 12 años
-							end
-							else if (edadMenores < 3) then
-							begin
-								contMenor3:= contMenor3 + 1; // Incrementa el contador por cada niño menor a 3 años
 							end;
 						end;
 					end;
+					totalGeneral:= bltosGeneral * 20;
+					total3Edad:= bltos3Edad * 12;
+					totalMenores:= cont3a12 * 12;
+					total:= totalGeneral + total3Edad + totalMenores;
+					Clrscr;
+					// Se imprimen la cantidad de boletos de cada tipo y el total a pagar de cada boleto
+					writeln('Boletos Generales: ', bltosGeneral, ' Total: ', totalGeneral:0:2, '$');
+					writeln('Boletos de 3ra Edad: ', bltos3Edad, ' Total: ', total3Edad:0:2, '$');
+					writeln('Boletos de Niños: ', bltosMenores);
+					writeln('Boletos de niños entre 3 y 12 años: ', cont3a12, ' Total: ', totalMenores:0:2, '$');
+					writeln('Boletos de niños menores de 3 años: ', contMenor3, ' Total: 0.00$'); 
+					writeln('Total a pagar: ', total:0:2, '$');
+					readln();
 				end;
-				// Se calculan los precios a pagar por cada tipo de boleto y el total a pagar
-				totalGeneral:= bltosGeneral * 20;
-				total3Edad:= bltos3Edad * 12;
-				totalMenores:= cont3a12 * 12;
-				total:= totalGeneral + total3Edad + totalMenores;
-				Clrscr;
-				// Se imprimen la cantidad de boletos de cada tipo y el total a pagar de cada boleto
-				writeln('Boletos Generales: ', bltosGeneral, ' Total: ', totalGeneral:0:2, '$');
-				writeln('Boletos de 3ra Edad: ', bltos3Edad, ' Total: ', total3Edad:0:2, '$');
-				writeln('Boletos de Niños: ', bltosMenores);
-				writeln('Boletos de niños entre 3 y 12 años: ', cont3a12, ' Total: ', totalMenores:0:2, '$');
-				writeln('Boletos de niños menores de 3 años: ', contMenor3, ' Total: 0.00$'); 
-				writeln('Total a pagar: ', total:0:2, '$');
-				writeln();
-				writeln('Asientos Disponibles: ', asientosDisponibles); // Esto se debe mover al apartado de ver sistema
-				readln();
 				// vamos por aquí
 			end;
 			'2': begin

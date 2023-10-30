@@ -33,10 +33,12 @@ BEGIN
 			clrscr;
 			writeln('Teleferico de Merida');
 			writeln();
-			writeln('---------Menu----------');
-			writeln('1. Comprar boletos');
-			writeln('2. Ver Sistema');
-			writeln('3. Salir');
+			writeln('|---------Menu----------|');
+			writeln('|-----------------------|');
+			writeln('|1. Comprar boletos     |');
+			writeln('|2. Ver Sistema         |');
+			writeln('|3. Salir               |');
+			writeln('|-----------------------|');
 			readln(opcion);
 			case opcion of
 			'1': begin
@@ -78,6 +80,7 @@ BEGIN
 					else
 					begin
 						writeln('!Bienvenido al teleferico de Merida ', nombre, ' ', apellido, '!'); 
+						writeln();
 					end;
 				until apellidoValido;
 				
@@ -153,7 +156,7 @@ BEGIN
 					else
 					begin
 						writeln('Ha seleccionado la estacion ', estacion); // Si la entrada es válida se imprime un mensaje de confirmación
-						writeln('Continuar...');
+						write('Continuar...');
 						readln();
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
 					estacionEntrada:= estacion; // Guarda en la variable la estación en la cual entra el usuario
@@ -172,6 +175,7 @@ BEGIN
 							writeln('Elija la opcion que desee.');
 							writeln('1. Tramo: Barinitas - La Montana');
 							writeln('2. Salir de la estacion'); // salir de la estacion se repite en todas las estaciones 
+							writeln();
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -180,7 +184,7 @@ BEGIN
 							'2': begin
 							    estacionSalida:='BARINITAS';
 								Clrscr;
-								writeln('Ruta: ');
+								writeln('Ruta recorrida---->');
 								writeln();
 								continuar:= False;  // Se le asigna nuevo valor a la variable para salir del bucle y volver al menú del programa
 							end
@@ -203,6 +207,7 @@ BEGIN
 							writeln('1. Tramo: La Montana - La Aguada'); // Opción de tramo que avanza a la siguiente estación
 							writeln('2. Regresar a la estacion anterior'); // Opción de tramo que regresa a la estación anterior
 							writeln('3. Salir de la estacion');
+							writeln();
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -214,7 +219,7 @@ BEGIN
 							'3': begin
 							    estacionSalida:='LA MONTANA'; 
 								Clrscr;
-								writeln('Ruta: ');
+								writeln('Ruta recorrida---->');
 								writeln();
 								continuar:= False;
 							end
@@ -236,6 +241,7 @@ BEGIN
 							writeln('1. Tramo: La Aguada - Loma Redonda');
 							writeln('2. Regresar a la estacion anterior');
 							writeln('3. Salir de la estacion');
+							writeln();
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -247,7 +253,7 @@ BEGIN
 							'3': begin
 							    estacionSalida:='LA AGUADA';
 								Clrscr;
-								writeln('Ruta: ');
+								writeln('Ruta recorrida---->');
 								writeln();
 								continuar:= False;
 							end
@@ -269,6 +275,7 @@ BEGIN
 							writeln('1. Tramo: Loma Redonda - Pico Espejo');
 							writeln('2. Regresar a la estacion anterior');
 							writeln('3. Salir de la estacion');
+							writeln();
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -280,7 +287,7 @@ BEGIN
 							'3': begin
 							    estacionSalida:='LOMA REDONDA';
 								Clrscr;
-								writeln('Ruta: ');
+								writeln('Ruta recorrida---->');
 								writeln();
 								continuar:= False;
 							end
@@ -300,6 +307,7 @@ BEGIN
 							writeln();
 							writeln('1. Regresar a la estacion anterior'); // En esta estación el usuario solo puede usar el tramo que conduce a la estación anterior
 							writeln('2. Salir de la estacion');
+							writeln();
 							readln(opcionTramo);
 							case opcionTramo of
 							'1': begin
@@ -308,7 +316,7 @@ BEGIN
 							'2': begin
 							    estacionSalida:= 'PICO ESPEJO';
 								Clrscr;
-								writeln('Ruta: ');
+								writeln('Ruta recorrida---->');
 								writeln();
 								continuar:= False;
 							end
@@ -321,13 +329,15 @@ BEGIN
 						until (opcionTramo = '1')or (opcionTramo = '2');
 					end;
 				end;
+				gotoxy(21, 1);
 				writeln('Estacion de entrada: ', estacionEntrada);
+				gotoxy(21, 2);
 				writeln('Estacion de salida: ', estacionSalida);
 				readln();
 				
 				Clrscr;
 				writeln('Asientos Disponibles para este viaje: ', asientosDisponibles);
-				writeln('Presione enter para continuar.'); // Imprime el número de asientos que quedan antes de cada viaje
+				write('Presione enter para continuar. '); // Imprime el número de asientos que quedan antes de cada viaje
 				readln();
 				if (asientosDisponibles = 0) then // Si no quedan asientos disponibles imprime un mensaje diciéndole al usuario que no puede ingresar en el viaje
 			    begin
@@ -436,12 +446,24 @@ BEGIN
 					total:= totalGeneral + total3Edad + totalMenores;
 					Clrscr;
 					// Se imprimen la cantidad de boletos de cada tipo y el total a pagar de cada boleto por el usuario
-					writeln('Boletos Generales: ', bltosGeneral, ' Total: ', totalGeneral:0:2, '$');
-					writeln('Boletos de 3ra Edad: ', bltos3Edad, ' Total: ', total3Edad:0:2, '$');
-					writeln('Boletos de Niños: ', bltosMenores);
-					writeln('Boletos de niños entre 3 y 12 años: ', cont3a12, ' Total: ', totalMenores:0:2, '$');
-					writeln('Boletos de niños menores de 3 años: ', contMenor3, ' Total: 0.00$'); 
-					writeln('Total a pagar: ', total:0:2, '$');
+					writeln('-------------------FACTURA------------------------');
+					writeln('--------------------------------------------------');
+					writeln();
+					writeln('Boletos Generales-----------------------', bltosGeneral, 'x20$');
+					writeln('Costo-----------------------------------', totalGeneral:0:2, '$');
+					writeln();
+					writeln('Boletos de 3ra Edad---------------------', bltos3Edad, 'x12$');
+					writeln('Costo-----------------------------------', total3Edad:0:2, '$');
+					writeln();
+					writeln('Boletos de Niños-----------------------', bltosMenores);
+					writeln('Boletos de niños entre 3-12 años------', cont3a12, 'x12$');
+					writeln('Costo-----------------------------------', totalMenores:0:2, '$');
+					writeln();
+					writeln('Boletos de niños menores de 3 años----', contMenor3, 'x0$');
+					writeln('Costo-----------------------------------0.00$'); 
+					writeln();
+					writeln('-------------------------------------------------');
+					writeln('Total a pagar---------------------------', total:0:2, '$');
 					readln();
 				end;
 				// Se calcula el número de boletos vendidos de cada tipo y se actualiza cada vez que se compren más boletos
@@ -459,28 +481,34 @@ BEGIN
 			'2': begin
 				Clrscr;
 				// Se imprimen el número de boletos que se han vendido de cada tipo y en total
+				writeln('--------------------------------------');
+				writeln('---------Control de Boletos-----------');
+				writeln('--------------------------------------');
 				writeln('Total de boletos vendidos: ', totalAcumulado);
 				writeln('Boletos Generales vendidos: ', totalBltosGral);
 				writeln('Boletos de 3ra Edad vendidos: ', totalBltos3Edad);
 				writeln('Boletos de niños vendidos: ', totalBltos3a12);
-				writeln('Boletos de niños menores a 3 años: ', totalBltosMenor3);
+				writeln('Boletos de menores exonerados: ', totalBltosMenor3);
 				writeln();
 				// Se imprime el número de asientos disponibles para el viaje
-				writeln('---------------------------------------------------');
-				writeln();
+				writeln('--------------------------------------');
 				writeln('Asientos Disponibles: ', asientosDisponibles);
-				writeln();
+				writeln('--------------------------------------');
 				// Se imprimen las ventas generadas por cada tipo de boletos comprado y el total de todas las ventas
+				writeln();
+				writeln('--------------------------------------');
+				writeln('------Reporte de Ventas del Dia-------');
+				writeln('--------------------------------------');
 				writeln('Ventas de Boletos Generales: ', ventasGral:0:2);
 				writeln('Ventas de Boletos de 3ra Edad: ', ventas3Edad:0:2);
-				writeln('Ventas de Boletos de Niños entre 3 y 12 años: ', ventas3a12:0:2);
+				writeln('Ventas de Boletos de Niños: ', ventas3a12:0:2);
 				writeln('Ventas Totales: ', ventasTotal:0:2);
 				readln();
 			end;
 			'3': begin
 				Clrscr;
 				writeln('SALIENDO DEL SISTEMA DEL TELEFERICO DE MERIDA');
-				writeln('Presione la tecla enter para salir.');
+				write('Presione la tecla enter para salir. ');
 				readln();
 				exit();
 			end

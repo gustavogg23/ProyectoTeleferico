@@ -6,16 +6,15 @@ const
 	BOLETO_GRAL = 20;
 	BOLETO_3RAEDAD_NINOS = 12;
 var	
-
-	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida, nroEntrada, nroMayores, nroMenores: string;
+	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida, nroEntrada, nroMayores, nroMenores, opcionEntrada: string;
 	opcion, opcionTramo: char;
 	numeroBoletos, bltosVendidosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest: integer;
-	i, contApellido, contNombre, contCedula, contEstacion: integer;
-	nombreValido, cedulaValida, estacionValida, continuar,apellidoValido: boolean;
+	i, j, contApellido, contNombre, contCedula, contEstacion, contOpcion: integer;
+	nombreValido, cedulaValida, estacionValida, continuar, apellidoValido, opcionValida: boolean;
 
 BEGIN
-	
 	asientosDisponibles:= CAPACIDAD_MAX;
+	
 	while True do
 	begin
 		repeat
@@ -44,9 +43,10 @@ BEGIN
 					end;
 					if not nombreValido then
 					begin
-						writeln('Nombre Invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
+						writeln('Nombre invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
 					end;
 				until nombreValido;
+				
 				repeat
 					write('Por favor ingrese su apellido: '); 
 					readln(apellido);
@@ -61,13 +61,14 @@ BEGIN
 					end;
 					if not apellidoValido then
 					begin
-						writeln('Apellido Invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
+						writeln('Apellido invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
 					end
 					else
 					begin
-						writeln('Bienvenido al teleferico de Merida ', nombre, ' ', apellido, '!'); 
+						writeln('!Bienvenido al teleferico de Merida ', nombre, ' ', apellido, '!'); 
 					end;
 				until apellidoValido;
+				
 				repeat
 					write('Por favor ingrese su cedula: ');
 					readln(cedula);
@@ -85,6 +86,7 @@ BEGIN
 						writeln('Identificacion Invalida.'); 
 					end; 
 				until cedulaValida;
+				
 				clrscr;
 				writeln('El teleferico de Merida esta dividido en las siguientes 5 estaciones y 4 tramos:');
 				writeln();
@@ -115,6 +117,7 @@ BEGIN
 				writeln('|------------------------------|');
 				writeln();
 				writeln();
+				
 				repeat
 					write('Por favor seleccione la estacion en la que desea ingresar: '); // Pide al usuario que ingrese una estación
 					readln(estacion);
@@ -142,6 +145,7 @@ BEGIN
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
 					estacionEntrada:= estacion; // Guarda en la variable la estación en la cual entra el usuario
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
+				
 				repeat
 					Clrscr;
 					writeln('Cuantos boletos desea comprar?');
@@ -151,43 +155,65 @@ BEGIN
 					begin
 						writeln('Entrada invalida.');
 						readln();
+						Clrscr;
 						errorEntrada:= 1;
 					end;
-				
 				until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= CAPACIDAD_MAX)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
-			    bltosRest:=numeroBoletos;
-			    repeat
-					Clrscr;
-					write('Cuantos adultos de tercera edad van a viajar? ');
-					readln(nroMayores);
-					Val(nroMayores, bltos3Edad, errorEntrada); 
-					if (errorEntrada <> 0) or ((bltos3Edad > numeroBoletos) or (bltos3Edad > CAPACIDAD_MAX)) or (bltos3Edad < 0) then 
-					begin
-						writeln('Entrada invalida.');
-						readln();
-						errorEntrada:= 1;
-					end;
-				until (errorEntrada = 0) and ((bltos3Edad >= 1) and (bltos3Edad <= bltosRest));	
-				bltosRest:= numeroBoletos - bltos3Edad; // se actualiza variable para limitar el numero de entrada de mayores y menores que puede ingresar el usuario
-				repeat
-					Clrscr;
-					writeln('cuantos ninos van a viajar?');
-					readln(nroMenores);
-					Val(nroMenores, bltosMenores, errorEntrada); 
-					if (errorEntrada <> 0) or ((bltosMenores > bltosRest) or (bltosMenores > CAPACIDAD_MAX)) or (bltosMenores < 0 ) then 
-					begin
-						writeln('Entrada invalida.');
-						readln();
-						errorEntrada:= 1;
-					end;
 				
-				until (errorEntrada = 0) and ((bltosMenores >= 1) and (bltosMenores <= bltosRest));
+			    bltosRest:= numeroBoletos;
+			    
+			    repeat
+					writeln('Va a viajar con adultos de la 3ra Edad y/o niños? (s/n)');
+					readln(opcionEntrada);
+					for j:= 1 to length(opcionEntrada) do
+					begin
+						opcionEntrada[j]:= UpCase(opcionEntrada[j]); // Convierte la entrada en mayúsculas
+					end;
+					if (opcionEntrada <> 'S') and (opcionEntrada <> 'N') and (opcionEntrada <> 'SI') and (opcionEntrada <> 'NO') then // Se verifica si la entrada es válida
+					begin
+						writeln('Opcion invalida.');
+						readln();
+						Clrscr;
+					end;
+			    until (opcionEntrada = 'S') or (opcionEntrada = 'N') or (opcionEntrada = 'SI') or (opcionEntrada = 'NO'); // El bucle se repite hasta que la entrada sea válida
+			    
+			    if (opcionEntrada = 'S') or (opcionEntrada = 'SI') then // Si la entrada del usuario es 's' o 'si' procede a preguntar por el número de adultos mayores y niños 
+			    begin
+					repeat
+						Clrscr;
+						write('Cuantos adultos de tercera edad van a viajar? ');
+						readln(nroMayores);
+						Val(nroMayores, bltos3Edad, errorEntrada); // Convierte la entrada a un entero pata verificar si la entrada es un número
+						if (errorEntrada <> 0) or (bltos3Edad > numeroBoletos) or (bltos3Edad < 0) then // Si la entrada no es un número o el número es mayor al número de boletos que el usuario ingresó antes, o es negativo se imprime un error
+						begin
+							writeln('Entrada invalida.');
+							readln();
+							errorEntrada:= 1;
+						end;
+					until (errorEntrada = 0) and ((bltos3Edad >= 0) and (bltos3Edad <= numeroBoletos)); // El bucle se repite hasta que se ingrese un número válido
+					
+					bltosRest:= numeroBoletos - bltos3Edad; // Se actualiza variable para limitar el numero de entradas de niños que puede ingresar el usuario
+					
+					repeat
+						Clrscr;
+						write('Cuantos niños van a viajar? ');
+						readln(nroMenores);
+						Val(nroMenores, bltosMenores, errorEntrada); 
+						if (errorEntrada <> 0) or ((bltosMenores > bltosRest) or (bltosMenores < 0 )) then 
+						begin
+							writeln('Entrada invalida.');
+							readln();
+							errorEntrada:= 1;
+						end;
+					until (errorEntrada = 0) and ((bltosMenores >= 0) and (bltosMenores <= bltosRest));
+				end;
+				
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
+				
 				while continuar do // El bucle se repite hasta que el usuario decida salir del teleférico
 				begin
 					if (estacion = 'BARINITAS') then  // Si el usuario elige la estación Barinitas, puede elegir el tramo que avanza a la siguiente estación o salir del teleférico
 					begin
-					    
 						repeat  // Se repite hasta que el usuario elija una opción válida
 							Clrscr;
 							writeln('Estacion Barinitas');
@@ -216,8 +242,7 @@ BEGIN
 						until (opcionTramo = '1') or (opcionTramo = '2');
 					end;
 					if (estacion = 'LA MONTANA') then // Desde esta estación el usuario puede elegir entre dos tramos
-					begin
-					    
+					begin   
 						repeat
 							estacionAnterior:= 'BARINITAS'; // Asigna el nombre de la estación anterior a la variable
 							Clrscr;
@@ -252,7 +277,6 @@ BEGIN
 					end;
 					if (estacion = 'LA AGUADA') then
 					begin 
-					    
 						repeat
 							Clrscr;
 							writeln('Estacion La Aguada');
@@ -285,8 +309,7 @@ BEGIN
 						until (opcionTramo = '1') or (opcionTramo = '2') or (opcionTramo = '3');
 					end;
 					if (estacion = 'LOMA REDONDA') then
-					begin 
-					    
+					begin  
 						repeat
 							Clrscr;
 							writeln('Estacion Loma Redonda');
@@ -320,7 +343,6 @@ BEGIN
 					end;
 					if ( estacion = 'PICO ESPEJO') then
 					begin
-					    
 						repeat
 							Clrscr;
 							writeln('Estacion Pico Espejo');

@@ -134,7 +134,7 @@ BEGIN
 				writeln();
 				
 				repeat
-					write('Por favor seleccione la estacion en la que desea ingresar: '); // Pide al usuario que ingrese una estación
+					write('Por favor ingrese la estacion en la que desea entrar: '); // Pide al usuario que ingrese una estación
 					readln(estacion);
 					for i:= 1 to length(estacion) do  // Este bucle convierte la entrada a mayúsculas
 					begin
@@ -161,7 +161,7 @@ BEGIN
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
 					estacionEntrada:= estacion; // Guarda en la variable la estación en la cual entra el usuario
 				until (estacion = 'BARINITAS') or (estacion = 'LA MONTANA') or (estacion = 'LA AGUADA') or (estacion = 'LOMA REDONDA') or (estacion = 'PICO ESPEJO');
-			
+				
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
 				
 				while continuar do // El bucle se repite hasta que el usuario decida salir del teleférico
@@ -231,7 +231,7 @@ BEGIN
 							end;
 						until (opcionTramo = '1') or (opcionTramo = '2') or (opcionTramo = '3');
 					end;
-					if (estacion = 'LA AGUADA') then
+					if (estacion = 'LA AGUADA') then 
 					begin 
 						repeat
 							Clrscr;
@@ -328,7 +328,7 @@ BEGIN
 							end;
 						until (opcionTramo = '1')or (opcionTramo = '2');
 					end;
-				end;
+				end; 
 				gotoxy(21, 1);
 				writeln('Estacion de entrada: ', estacionEntrada);
 				gotoxy(21, 2);
@@ -449,6 +449,10 @@ BEGIN
 					writeln('-------------------FACTURA------------------------');
 					writeln('--------------------------------------------------');
 					writeln();
+					writeln('Nombre: ', nombre, ' ', apellido);
+					writeln('Cedula: ', cedula);
+					writeln();
+					writeln('--------------------------------------------------');
 					writeln('Boletos Generales-----------------------', bltosGeneral, 'x20$');
 					writeln('Costo-----------------------------------', totalGeneral:0:2, '$');
 					writeln();

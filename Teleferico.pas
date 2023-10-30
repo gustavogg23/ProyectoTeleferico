@@ -153,6 +153,7 @@ BEGIN
 					else
 					begin
 						writeln('Ha seleccionado la estacion ', estacion); // Si la entrada es válida se imprime un mensaje de confirmación
+						writeln('Continuar...');
 						readln();
 					end;     // El bucle se repite hasta que el usuario ingrese una estación válida
 					estacionEntrada:= estacion; // Guarda en la variable la estación en la cual entra el usuario
@@ -179,8 +180,8 @@ BEGIN
 							'2': begin
 							    estacionSalida:='BARINITAS';
 								Clrscr;
-								writeln('Gracias por usar el teleferico de Merida');
-								writeln('Por favor vuelva pronto');
+								writeln('Ruta: ');
+								writeln();
 								continuar:= False;  // Se le asigna nuevo valor a la variable para salir del bucle y volver al menú del programa
 							end
 							else
@@ -213,8 +214,8 @@ BEGIN
 							'3': begin
 							    estacionSalida:='LA MONTANA'; 
 								Clrscr;
-								writeln('Gracias por usar el teleferico de Merida');
-								writeln('Por favor vuelva pronto');
+								writeln('Ruta: ');
+								writeln();
 								continuar:= False;
 							end
 							else
@@ -246,8 +247,8 @@ BEGIN
 							'3': begin
 							    estacionSalida:='LA AGUADA';
 								Clrscr;
-								writeln('Gracias por usar el teleferico de Merida');
-								writeln('Por favor vuelva pronto');
+								writeln('Ruta: ');
+								writeln();
 								continuar:= False;
 							end
 							else
@@ -279,8 +280,8 @@ BEGIN
 							'3': begin
 							    estacionSalida:='LOMA REDONDA';
 								Clrscr;
-								writeln('Gracias por usar el teleferico de Merida');
-								writeln('Por favor vuelva pronto');
+								writeln('Ruta: ');
+								writeln();
 								continuar:= False;
 							end
 							else
@@ -307,8 +308,8 @@ BEGIN
 							'2': begin
 							    estacionSalida:= 'PICO ESPEJO';
 								Clrscr;
-								writeln('Gracias por usar el teleferico de Merida');
-								writeln('Por favor vuelva pronto');
+								writeln('Ruta: ');
+								writeln();
 								continuar:= False;
 							end
 							else
@@ -325,7 +326,8 @@ BEGIN
 				readln();
 				
 				Clrscr;
-				writeln('Asientos Disponibles para este viaje: ', asientosDisponibles); // Imprime el número de asientos que quedan antes de cada viaje
+				writeln('Asientos Disponibles para este viaje: ', asientosDisponibles);
+				writeln('Presione enter para continuar.'); // Imprime el número de asientos que quedan antes de cada viaje
 				readln();
 				if (asientosDisponibles = 0) then // Si no quedan asientos disponibles imprime un mensaje diciéndole al usuario que no puede ingresar en el viaje
 			    begin
@@ -433,7 +435,7 @@ BEGIN
 					totalMenores:= cont3a12 * 12;
 					total:= totalGeneral + total3Edad + totalMenores;
 					Clrscr;
-					// Se imprimen la cantidad de boletos de cada tipo y el total a pagar de cada boleto
+					// Se imprimen la cantidad de boletos de cada tipo y el total a pagar de cada boleto por el usuario
 					writeln('Boletos Generales: ', bltosGeneral, ' Total: ', totalGeneral:0:2, '$');
 					writeln('Boletos de 3ra Edad: ', bltos3Edad, ' Total: ', total3Edad:0:2, '$');
 					writeln('Boletos de Niños: ', bltosMenores);
@@ -464,6 +466,8 @@ BEGIN
 				writeln('Boletos de niños menores a 3 años: ', totalBltosMenor3);
 				writeln();
 				// Se imprime el número de asientos disponibles para el viaje
+				writeln('---------------------------------------------------');
+				writeln();
 				writeln('Asientos Disponibles: ', asientosDisponibles);
 				writeln();
 				// Se imprimen las ventas generadas por cada tipo de boletos comprado y el total de todas las ventas

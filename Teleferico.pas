@@ -474,7 +474,10 @@ BEGIN
 				readln();
 			end;
 			'3': begin
-				writeln('PRUEBA 3');
+				Clrscr;
+				writeln('SALIENDO DEL SISTEMA DEL TELEFERICO DE MERIDA');
+				writeln('Presione la tecla enter para salir.');
+				readln();
 				exit();
 			end
 			else

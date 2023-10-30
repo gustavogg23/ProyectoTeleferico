@@ -7,13 +7,20 @@ var
 	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida: string;
 	nroEntrada, nroMayores, nroMenores, opcionEntrada, edadEntrada: string;
 	opcion, opcionTramo: char;
-	numeroBoletos, bltosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: integer;
+	numeroBoletos, bltosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: integer; 
+	totalBltos, totalAcumulado, totalBltosGral, totalBltos3Edad, totalBltos3a12, totalBltosMenor3: integer;
 	i, j, k, contApellido, contNombre, contCedula, contEstacion, cont3a12, contMenor3: integer;
 	totalGeneral, total3Edad, totalMenores, total: real;
 	nombreValido, cedulaValida, estacionValida, continuar, apellidoValido: boolean;
 
 BEGIN
 	asientosDisponibles:= CAPACIDAD_MAX;
+	// Se inicializan varibales para registrar el número de boletos vendidos de cada tipo
+	totalAcumulado:= 0;
+	totalBltosGral:= 0;
+	totalBltos3Edad:= 0;
+	totalBltos3a12:= 0;
+	totalBltosMenor3:= 0;
 	
 	while True do
 	begin
@@ -415,6 +422,7 @@ BEGIN
 							end;
 						end;
 					end;
+					totalBltos:= bltosGeneral + bltos3Edad + cont3a12 + contMenor3;
 					totalGeneral:= bltosGeneral * 20;
 					total3Edad:= bltos3Edad * 12;
 					totalMenores:= cont3a12 * 12;
@@ -429,10 +437,22 @@ BEGIN
 					writeln('Total a pagar: ', total:0:2, '$');
 					readln();
 				end;
-				// vamos por aquí
+				// Se calcula el número de boletos vendidos de cada tipo y se actualiza cada vez que se compren más boletos
+				totalAcumulado:= totalAcumulado + totalBltos; 
+				totalBltosGral:= totalBltosGral + bltosGeneral;
+				totalBltos3Edad:= totalBltos3Edad + bltos3Edad;
+				totalBltos3a12:= totalBltos3a12 + cont3a12;
+				totalBltosMenor3:= totalBltosMenor3 + contMenor3;
+				total:= totalGeneral + total3Edad + totalMenores;
 			end;
 			'2': begin
-				writeln('PRUEBA 2');
+				Clrscr;
+				writeln('Total de boletos vendidos: ', totalAcumulado);
+				writeln('Boletos Generales vendidos: ', totalBltosGral);
+				writeln('Boletos de 3ra Edad vendidos: ', totalBltos3Edad);
+				writeln('Boletos de niños vendidos: ', totalBltos3a12);
+				writeln('Boletos de niños menores a 3 años: ', totalBltosMenor3);
+				writeln('Asientos Disponibles: ', asientosDisponibles);
 				readln();
 			end;
 			'3': begin

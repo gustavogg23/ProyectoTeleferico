@@ -3,15 +3,14 @@ program Teleferico;
 uses crt;
 const
 	CAPACIDAD_MAX = 60;
-	BOLETO_GRAL = 20;
-	BOLETO_3RAEDAD_NINOS = 12;
 var	
 	nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida: string;
 	nroEntrada, nroMayores, nroMenores, opcionEntrada, edadEntrada: string;
 	opcion, opcionTramo: char;
-	numeroBoletos, bltosVendidosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: integer;
-	i, j, k, contApellido, contNombre, contCedula, contEstacion, contOpcion, cont3a12, contMenor3: integer;
-	nombreValido, cedulaValida, estacionValida, continuar, apellidoValido, opcionValida: boolean;
+	numeroBoletos, bltosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: integer;
+	i, j, k, contApellido, contNombre, contCedula, contEstacion, cont3a12, contMenor3: integer;
+	totalGeneral, total3Edad, totalMenores, total: real;
+	nombreValido, cedulaValida, estacionValida, continuar, apellidoValido: boolean;
 
 BEGIN
 	asientosDisponibles:= CAPACIDAD_MAX;
@@ -162,6 +161,8 @@ BEGIN
 				until (errorEntrada = 0) and ((numeroBoletos >= 1) and (numeroBoletos <= CAPACIDAD_MAX)); // Repite el bucle hasta que el usuario ingrese un número entre 1 y 60
 				
 			    bltosRest:= numeroBoletos;
+			    bltosGeneral:= numeroBoletos;
+			    asientosDisponibles:= CAPACIDAD_MAX - numeroBoletos;
 			    
 			    repeat
 					writeln('Va a viajar con adultos de la 3ra Edad y/o niños? (s/n)');
@@ -207,6 +208,8 @@ BEGIN
 							errorEntrada:= 1;
 						end;
 					until (errorEntrada = 0) and ((bltosMenores >= 0) and (bltosMenores <= bltosRest));
+					bltosGeneral:= bltosGeneral - bltos3Edad - bltosMenores;
+					
 					if (bltosMenores > 0) then // Si hay niños entonces se verifican las edades de los niños que vana viajar
 					begin
 						cont3a12:= 0; // Contador para niños entre 3 y 12 años
@@ -236,7 +239,23 @@ BEGIN
 						end;
 					end;
 				end;
-				
+				// Se calculan los precios a pagar por cada tipo de boleto y el total a pagar
+				totalGeneral:= bltosGeneral * 20;
+				total3Edad:= bltos3Edad * 12;
+				totalMenores:= cont3a12 * 12;
+				total:= totalGeneral + total3Edad + totalMenores;
+				Clrscr;
+				// Se imprimen la cantidad de boletos de cada tipo y el total a pagar de cada boleto
+				writeln('Boletos Generales: ', bltosGeneral, ' Total: ', totalGeneral:0:2, '$');
+				writeln('Boletos de 3ra Edad: ', bltos3Edad, ' Total: ', total3Edad:0:2, '$');
+				writeln('Boletos de Niños: ', bltosMenores);
+				writeln('Boletos de niños entre 3 y 12 años: ', cont3a12, ' Total: ', totalMenores:0:2, '$');
+				writeln('Boletos de niños menores de 3 años: ', contMenor3, ' Total: 0.00$'); 
+				writeln('Total a pagar: ', total:0:2, '$');
+				writeln();
+				writeln('Asientos Disponibles: ', asientosDisponibles); // Esto se debe mover al apartado de ver sistema
+				readln();
+				// vamos por aquí
 				continuar:= True; // Inicializa la variable que controla el bucle de los tramos
 				
 				while continuar do // El bucle se repite hasta que el usuario decida salir del teleférico

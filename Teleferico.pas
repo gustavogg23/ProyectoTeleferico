@@ -416,7 +416,6 @@ BEGIN
 						
 						if (bltosMenores > 0) then // Si hay niños entonces se verifican las edades de los niños que vana viajar
 						begin
-							// aqui
 							for k:= 1 to bltosMenores do // El bucle le pide al usuario la edad de cada niño 
 							begin
 								repeat

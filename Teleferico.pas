@@ -9,12 +9,13 @@ var
 	opcion, opcionTramo: char;
 	numeroBoletos, bltosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: integer; 
 	totalBltos, totalAcumulado, totalBltosGral, totalBltos3Edad, totalBltos3a12, totalBltosMenor3: integer;
-	i, j, k, contApellido, contNombre, contCedula, contEstacion, cont3a12, contMenor3: integer;
+	i, j, k, contApellido, contNombre, contCedula, contEstacion, cont3a12, contMenor3, contVentas: integer;
 	totalGeneral, total3Edad, totalMenores, total, ventasGral, ventas3Edad, ventas3a12, ventasTotal: real;
 	nombreValido, cedulaValida, estacionValida, continuar, apellidoValido: boolean;
 
 BEGIN
 	asientosDisponibles:= CAPACIDAD_MAX;
+	contVentas:= 0;
 	// Se inicializan varibales para registrar el número de boletos vendidos de cada tipo
 	totalAcumulado:= 0;
 	totalBltosGral:= 0;
@@ -439,6 +440,7 @@ BEGIN
 							end;
 						end;
 					end;
+					contVentas:= contVentas + 1;
 					totalBltos:= bltosGeneral + bltos3Edad + cont3a12 + contMenor3;
 					totalGeneral:= bltosGeneral * 20;
 					total3Edad:= bltos3Edad * 12;
@@ -503,6 +505,7 @@ BEGIN
 				writeln('--------------------------------------');
 				writeln('------Reporte de Ventas del Dia-------');
 				writeln('--------------------------------------');
+				writeln('Ventas realizadas: ', contVentas);
 				writeln('Ventas de Boletos Generales: ', ventasGral:0:2);
 				writeln('Ventas de Boletos de 3ra Edad: ', ventas3Edad:0:2);
 				writeln('Ventas de Boletos de Niños: ', ventas3a12:0:2);

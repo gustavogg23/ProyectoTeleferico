@@ -7,6 +7,7 @@ Variables totalBltos, totalAcumulado, totalBltosGral, totalBltos3Edad, totalBlto
 Variables i, j, k, contApellido, contNombre, contCedula, contEstacion, cont3a12, contMenor3: entero
 Variables totalGeneral, total3Edad, totalMenores, total, ventasGral, ventas3Edad, ventas3a12, ventasTotal: real
 Variables nombreValido, cedulaValida, estacionValida, continuar, apellidoValido: booleano
+
 INICIO
 Hacer: asientosDisponibles = CAPACIDAD_MAX
 Hacer: totalAcumulado = 0

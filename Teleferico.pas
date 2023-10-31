@@ -348,6 +348,9 @@ BEGIN
 				else
 				begin
 					repeat
+						cont3a12:= 0; // Contador para niños entre 3 y 12 años
+						contMenor3:= 0; // Contador para niños menores a 3 años
+						bltos3Edad:= 0;
 						Clrscr;
 						writeln('Cuantos boletos desea comprar?');
 						readln(nroEntrada);
@@ -413,8 +416,7 @@ BEGIN
 						
 						if (bltosMenores > 0) then // Si hay niños entonces se verifican las edades de los niños que vana viajar
 						begin
-							cont3a12:= 0; // Contador para niños entre 3 y 12 años
-							contMenor3:= 0; // Contador para niños menores a 3 años
+							// aqui
 							for k:= 1 to bltosMenores do // El bucle le pide al usuario la edad de cada niño 
 							begin
 								repeat

@@ -173,7 +173,7 @@ BEGIN
 							writeln('Estacion Barinitas');
 							writeln();
 							writeln('Elija la opcion que desee.');
-							writeln('1. Tramo: Barinitas - La Montana');
+							writeln('1. Tramo: Barinitas - La Montaña');
 							writeln('2. Salir de la estacion'); // salir de la estacion se repite en todas las estaciones 
 							writeln();
 							readln(opcionTramo);
@@ -201,10 +201,10 @@ BEGIN
 						repeat
 							estacionAnterior:= 'BARINITAS'; // Asigna el nombre de la estación anterior a la variable
 							Clrscr;
-							writeln('Estacion La Montana');
+							writeln('Estacion La Montaña');
 							writeln();
 							writeln('Por favor elija que tramo desea recorrer.');
-							writeln('1. Tramo: La Montana - La Aguada'); // Opción de tramo que avanza a la siguiente estación
+							writeln('1. Tramo: La Montaña - La Aguada'); // Opción de tramo que avanza a la siguiente estación
 							writeln('2. Regresar a la estacion anterior'); // Opción de tramo que regresa a la estación anterior
 							writeln('3. Salir de la estacion');
 							writeln();
@@ -326,7 +326,7 @@ BEGIN
 								readln();
 							end;
 							end;
-						until (opcionTramo = '1')or (opcionTramo = '2');
+						until (opcionTramo = '1') or (opcionTramo = '2');
 					end;
 				end; 
 				gotoxy(21, 1);

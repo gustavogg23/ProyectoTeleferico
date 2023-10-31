@@ -1,0 +1,431 @@
+Constante CAPACIDAD_MAX = 60
+Variables nombre, apellido, cedula, estacion, estacionAnterior, estacionEntrada, estacionSalida: cadena de caracteres
+Variables nroEntrada, nroMayores, nroMenores, opcionEntrada, edadEntrada: cadena de caracteres
+Variables opcion, opcionTramo: caracter
+Variables numeroBoletos, bltosGeneral, bltos3Edad, asientosDisponibles, bltosMenores, errorEntrada, bltosRest, edadMenores: entero
+Variables totalBltos, totalAcumulado, totalBltosGral, totalBltos3Edad, totalBltos3a12, totalBltosMenor3: entero
+Variables i, j, k, contApellido, contNombre, contCedula, contEstacion, cont3a12, contMenor3: entero
+Variables totalGeneral, total3Edad, totalMenores, total, ventasGral, ventas3Edad, ventas3a12, ventasTotal: real
+Variables nombreValido, cedulaValida, estacionValida, continuar, apellidoValido: booleano
+INICIO
+Hacer: asientosDisponibles = CAPACIDAD_MAX
+Hacer: totalAcumulado = 0
+Hacer: totalBltosGral = 0
+Hacer: totalBltos3Edad = 0
+Hacer: totalBltos3a12 = 0
+Hacer: totalBltosMenor3 = 0
+Hacer: ventasGral = 0
+Hacer: ventas3Edad = 0
+Hacer: ventas3a12 = 0
+Hacer: ventasTotal = 0
+
+Mientras Verdadero hacer:
+    Repetir:
+        Escribir: "Teleferico de Merida"
+        Escribir: "Menu"
+        Escribir: "1. Comprar boletos"
+        Escribir: "2. Ver Sistema"
+        Escribir: "3. Salir"
+        Leer: opcion
+
+        Según opcion:
+            Caso '1':
+                Repetir:
+                    Escribir: "Por favor ingrese su nombre:"
+                    Leer nombre
+
+                    Hacer: nombreValido = Verdadero
+
+                    Para contNombre desde 1 hasta longitud(nombre) hacer:
+                        Si no (nombre[contNombre] en ['A'..'Z', 'a'..'z']) entonces:
+                            Hacer: nombreValido = Falso
+                            Salir del bucle
+                        Fin Si
+                    Fin Para
+                    Si no nombreValido entonces:
+                        Escribir: "Nombre invalido."
+                    Fin Si
+                Hasta que nombreValido sea Verdadero
+
+                Repetir:
+                    Escribir: "Por favor ingrese su apellido:"
+                    Leer: apellido
+
+                    Hacer: apellidoValido = Verdadero
+
+                    Para contApellido desde 1 hasta longitud(apellido) hacer:
+                        Si no (apellido[contApellido] en ['A'..'Z', 'a'..'z']) entonces:
+                            Hacer: apellidoValido = Falso
+                            Salir del bucle
+                        Fin Si
+                    Fin Para
+                    Si no apellidoValido entonces:
+                        Escribir: "Apellido invalido."
+                    Fin Si
+                    Sino:
+                        Escribir: "!Bienvenido al teleferico de Merida ", nombre + " " + apellido + "!"
+                    Fin Sino
+                Hasta que apellidoValido sea Verdadero
+                
+                Repetir:
+                    Escribir "Por favor ingrese su cedula:"
+                    Leer cedula
+
+                    Hacer: cedulaValida = Verdadero
+
+                    Para contCedula desde 1 hasta longitud(cedula) hacer:
+                        Si no (cedula[contCedula] en ['0'..'9', '.']) entonces: // Verifica que la cédula solo contenga números y puntos
+                            Hacer: cedulaValida = Falso
+                            Salir del bucle
+                        Fin Si
+                    Fin Para
+                    Si no cedulaValida entonces:
+                        Escribir "Identificacion Invalida."
+                    Fin Si
+                Hasta que cedulaValida sea Verdadero
+        
+                Escribir: "El teleferico de Merida esta dividido en las siguientes 5 estaciones y 4 tramos:"
+                Escribir: "Estaciones"
+                Escribir: " - Barinitas"
+                Escribir: " - La Montana"
+                Escribir: " - La Aguada"
+                Escribir: " - Loma Redonda"
+                Escribir: " - Pico Espejo"
+  
+                Escribir "Tramos"
+                Escribir " - Barinitas - La Montana"
+                Escribir " - La Montana - La Aguada"
+                Escribir " - La Aguada - Loma Redonda"
+                Escribir " - Loma Redonda - Pico Espejo"
+
+                Repetir:
+                    Escribir: "Por favor ingrese la estacion en la que desea entrar:"
+                    Leer: estacion
+
+                    Para i desde 1 hasta longitud(estacion) hacer:
+                        Convertir estacion[i] a mayúsculas
+                    Fin Para
+                    Hacer: estacionValida = Verdadero
+
+                    Para contEstacion desde 1 hasta longitud(estacion) hacer:
+                        Si no (estacion[contEstacion] en ['A'..'Z', ' ']) entonces:
+                            Hacer: estacionValida = Falso
+                            Salir del bucle
+                        Fin Si
+                    Fin Para
+                    Si no estacionValida o (estacion <> 'BARINITAS') y (estacion <> 'LA MONTANA') y (estacion <> 'LA AGUADA') y (estacion <> 'LOMA REDONDA') y (estacion <> 'PICO ESPEJO') entonces:
+                        Escribir: "La estacion que ha ingresado no es valida."
+                    Fin Si
+                    Sino:
+                        Escribir: "Ha seleccionado la estacion ", estacion
+                        Escribir: "Continuar..."
+                    Fin Sino
+
+                    Hacer: estacionEntrada = estacion
+
+                Hasta que (estacion = 'BARINITAS') o (estacion = 'LA MONTANA') o (estacion = 'LA AGUADA') o (estacion = 'LOMA REDONDA') o (estacion = 'PICO ESPEJO')
+                Repetir:
+                    Escribir: "Por favor ingrese la estacion en la que desea entrar:"
+                    Leer estacion
+
+                    Para i desde 1 hasta longitud(estacion) hacer:
+                        Convertir estacion[i] a mayúsculas
+                    Fin Para
+                    Hacer: estacionValida = Verdadero
+
+                    Para contEstacion desde 1 hasta longitud(estacion) hacer:
+                        Si no (estacion[contEstacion] en ['A'..'Z', ' ']) entonces:
+                            Hacer: estacionValida = Falso
+                            Salir del bucle
+                        Fin Si
+                    Fin Para
+                    Si no estacionValida o (estacion <> 'BARINITAS') y (estacion <> 'LA MONTANA') y (estacion <> 'LA AGUADA') y (estacion <> 'LOMA REDONDA') y (estacion <> 'PICO ESPEJO') entonces:
+                        Escribir: "La estacion que ha ingresado no es valida."
+                    Fin Si
+                    Sino:
+                        Escribir: "Ha seleccionado la estacion ", estacion
+                        Escribir: "Continuar..."
+                    Fin Sino
+
+                    Hacer: estacionEntrada = estacion
+                Hasta que (estacion = 'BARINITAS') o (estacion = 'LA MONTANA') o (estacion = 'LA AGUADA') o (estacion = 'LOMA REDONDA') o (estacion = 'PICO ESPEJO')
+
+                Hacer: continuar = Verdadero
+                Mientras continuar hacer:
+                    Si estacion = 'BARINITAS' entonces:
+                        Repetir:
+                            Escribir: "Estacion Barinitas"
+                            Escribir: "Elija la opcion que desee."
+                            Escribir: "1. Tramo: Barinitas - La Montana"
+                            Escribir: "2. Salir de la estacion"
+                            Leer: opcionTramo
+
+                            Según opcionTramo:
+                            Caso '1':
+                                Hacer: estacion = 'LA MONTANA'
+                            Fin Caso
+                            Caso '2':
+                                Hacer: estacionSalida = 'BARINITAS'
+                                Escribir: "Ruta recorrida---->"
+                                Hacer: continuar = Falso
+                            Fin Caso
+                            Caso contrario:
+                                Escribir "Opcion invalida."
+                            Fin Caso 
+                        Hasta que (opcionTramo = '1') o (opcionTramo = '2')
+                    Fin Si
+
+                    Si estacion = 'LA MONTANA' entonces:
+                        Repetir:
+                            Hacer: estacionAnterior = 'BARINITAS'
+                            Escribir: "Estacion La Montana"
+                            Escribir: "Por favor elija que tramo desea recorrer."
+                            Escribir: "1. Tramo: La Montana - La Aguada"
+                            Escribir: "2. Regresar a la estacion anterior"
+                            Escribir: "3. Salir de la estacion"
+                            Leer: opcionTramo
+
+                            Según opcionTramo:
+                                Caso '1':
+                                    Hacer: estacion = 'LA AGUADA'
+                                Fin Caso
+                                Caso '2':
+                                    Hacer: estacion = estacionAnterior
+                                Fin Caso
+                                Caso '3':
+                                    Hacer: estacionSalida = 'LA MONTANA'
+                                    Escribir: "Ruta recorrida---->"
+                                    Hacer: continuar = Falso
+                                Fin Caso
+                                Caso contrario:
+                                    Escribir: "Opcion invalida."
+                                Fin Caso 
+
+                        Hasta que (opcionTramo = '1') o (opcionTramo = '2') o (opcionTramo = '3')
+                    Fin Si
+            
+                    Si estacion = 'LA AGUADA' entonces:
+                        Repetir:
+                            Escribir: "Estacion La Aguada"
+                            Escribir: "Por favor elija que tramo desea recorrer."
+                            Escribir: "1. Tramo: La Aguada - Loma Redonda"
+                            Escribir: "2. Regresar a la estacion anterior"
+                            Escribir: "3. Salir de la estacion"
+                            Leer: opcionTramo
+
+                            Según opcionTramo:
+                                Caso '1':
+                                    Hacer: estacion = 'LOMA REDONDA'
+                                Fin Caso 
+                                Caso '2':
+                                    Hacer: estacion = 'LA MONTANA'
+                                Fin Caso
+                                Caso '3':
+                                    Hacer: estacionSalida = 'LA AGUADA'
+                                    Escribir: "Ruta recorrida---->"
+                                    Hacer: continuar = Falso
+                                Fin Caso
+                                Caso contrario:
+                                    Escribir: "Opcion invalida."
+                                Fin Caso
+                        Hasta que (opcionTramo = '1') o (opcionTramo = '2') o (opcionTramo = '3')
+                    Fin Si
+
+                    Si estacion = 'LOMA REDONDA' entonces:
+                        Repetir:
+                            Escribir: "Estacion Loma Redonda"
+                            Escribir: "Por favor elija que tramo desea recorrer."
+                            Escribir: "1. Tramo: Loma Redonda - Pico Espejo"
+                            Escribir: "2. Regresar a la estacion anterior"
+                            Escribir: "3. Salir de la estacion"
+                            Leer: opcionTramo
+
+                            Según opcionTramo:
+                                Caso '1':
+                                    Hacer: estacion = 'PICO ESPEJO'
+                                Fin Caso
+                                Caso '2':
+                                    Hacer: estacion = 'LA AGUADA'
+                                Fin Caso
+                                Caso '3':
+                                    Hacer: estacionSalida = 'LOMA REDONDA'
+                                    Escribir: "Ruta recorrida---->"
+                                    Hacer: continuar = Falso
+                                Fin Caso
+                                Caso contrario:
+                                    Escribir: "Opcion invalida."
+                                Fin Caso
+                        Hasta que (opcionTramo = '1') o (opcionTramo = '2') o (opcionTramo = '3')
+                    Fin Si
+
+                    Si estacion = 'PICO ESPEJO' entonces:
+                        Repetir:
+                            Escribir: "Estacion Pico Espejo"
+                            Escribir: "1. Regresar a la estacion anterior"
+                            Escribir: "2. Salir de la estacion"
+                            Leer: opcionTramo
+
+                            Según opcionTramo:
+                                Caso '1':
+                                    Hacer: estacion = 'LOMA REDONDA'
+                                Fin Caso
+                                Caso '2':
+                                    Hacer: estacionSalida = 'PICO ESPEJO'
+                                    Escribir: "Ruta recorrida---->"
+                                    Hacer: continuar = Falso
+                                Fin Caso
+                                Caso contrario:
+                                    Escribir: "Opcion invalida."
+                                Fin Caso
+                        Hasta que (opcionTramo = '1') o (opcionTramo = '2')
+                    Fin Si
+
+                Escribir: estacionEntrada
+                Escribir: estacionSalida
+                Escribir: asientosDisponibles
+
+                Si asientosDisponibles = 0 entonces:
+                    Escribir "Este viaje ya no cuenta con mas asientos disponibles, por favor espere por el siguiente viaje."
+                Fin Si
+                Sino:
+                    Repetir:
+                        Escribir: "Cuantos boletos desea comprar?"
+                        Leer: nroEntrada
+
+                        Convertir nroEntrada a numeroBoletos
+
+                        Si errorEntrada <> 0 o (numeroBoletos < 1) o (numeroBoletos > asientosDisponibles) entonces:
+                            Escribir: "Entrada invalida."
+                            Hacer: errorEntrada = 1
+                        Fin Si
+                    Hasta que errorEntrada = 0 y (numeroBoletos >= 1) y (numeroBoletos <= asientosDisponibles)
+
+                    Hacer: bltosRest = numeroBoletos
+                    Hacer: bltosGeneral = numeroBoletos
+                    Hacer: asientosDisponibles = asientosDisponibles - numeroBoletos
+
+                    Repetir:
+                        Escribir: "Va a viajar con adultos de la 3ra Edad y/o niños? (s/n)"
+                        Leer: opcionEntrada
+
+                        Convertir opcionEntrada a mayúsculas
+
+                        Si opcionEntrada <> 'S' y opcionEntrada <> 'N' y opcionEntrada <> 'SI' y opcionEntrada <> 'NO' entonces:
+                            Escribir: "Opcion invalida."
+                            Leer
+                        Fin Si 
+                    Hasta que opcionEntrada = 'S' o opcionEntrada = 'N' o opcionEntrada = 'SI' o opcionEntrada = 'NO'
+
+                    Si opcionEntrada = 'S' o opcionEntrada = 'SI' entonces:
+                        Repetir:
+                            Escribir "Cuantos adultos de tercera edad van a viajar?"
+                            Leer: nroMayores
+
+                            Convertir nroMayores a bltos3Edad
+
+                            Si errorEntrada <> 0 o bltos3Edad > numeroBoletos o bltos3Edad < 0 entonces:
+                                Escribir "Entrada invalida."
+                                Hacer: errorEntrada = 1
+                            Fin Si
+                        Hasta que errorEntrada = 0 y (bltos3Edad >= 0) y (bltos3Edad <= numeroBoletos)
+
+                        Hacer: bltosRest = numeroBoletos - bltos3Edad
+                        Repetir:
+                            Escribir: "Cuantos niños van a viajar?"
+                            Leer: nroMenores
+
+                            Convertir nroMenores a bltosMenores
+
+                            Si errorEntrada <> 0 o (bltosMenores > bltosRest) o (bltosMenores < 0) entonces:
+                                Escribir "Entrada invalida."
+                                Hacer: errorEntrada = 1
+                            Fin Si 
+                        Hasta que errorEntrada = 0 y (bltosMenores >= 0) y (bltosMenores <= bltosRest)
+
+                        Hacer: bltosGeneral = bltosGeneral - bltos3Edad - bltosMenores
+
+                        Si bltosMenores > 0 entonces:
+                            Hacer: cont3a12 = 0
+                            Hacer: contMenor3 = 0
+
+                            Para k desde 1 hasta bltosMenores hacer:
+                                Repetir:
+                                    Escribir: "Ingrese la edad del niño ", k, ":"
+                                    Leer: edadEntrada
+
+                                    Convertir edadEntrada a edadMenores
+
+                                    Si errorEntrada <> 0 o (edadMenores < 0) o (edadMenores > 12) entonces:
+                                        Escribir "Edad invalida."
+                                        Leer
+                                        Hacer: errorEntrada = 1
+                                    Fin Si 
+                                Hasta que errorEntrada = 0 y ((edadMenores >= 3) y (edadMenores <= 12)) o (edadMenores < 3)
+
+                                Si (edadMenores >= 3) y (edadMenores <= 12) entonces:
+                                    Hacer: cont3a12 = cont3a12 + 1
+                                Fin Si
+                                Sino si edadMenores < 3 entonces:
+                                    Hacer: contMenor3 = contMenor3 + 1
+                                Fin Sino
+                            Fin Para
+                        Fin Si
+                    Fin Si 
+
+                    Hacer:totalBltos = bltosGeneral + bltos3Edad + cont3a12 + contMenor3
+                    Hacer: totalGeneral = bltosGeneral * 20
+                    Hacer: total3Edad = bltos3Edad * 12
+                    Hacer: totalMenores = cont3a12 * 12
+                    Hacer: total = totalGeneral + total3Edad + totalMenores
+
+                    Escribir: "FACTURA"
+                    Escribir: nombre + apellido
+                    Escribir: cedula
+                    Escribir: bltosGeneral
+                    Escribir: totalGeneral
+                    Escribir: bltos3Edad
+                    Escribir: total3Edad
+                    Escribir: bltosMenores
+                    Escribir: cont3a12
+                    Escribir: totalMenores
+                    Escribir: contMenor3
+                    Escribir: total
+                Fin Sino
+
+                Hacer: totalAcumulado = totalAcumulado + totalBltos
+                Hacer: totalBltosGral = totalBltosGral + bltosGeneral
+                Hacer: totalBltos3Edad = totalBltos3Edad + bltos3Edad
+                Hacer: totalBltos3a12 = totalBltos3a12 + cont3a12
+                Hacer: totalBltosMenor3 = totalBltosMenor3 + contMenor3
+
+                Hacer: ventasGral = ventasGral + totalGeneral
+                Hacer: ventas3Edad = ventas3Edad + total3Edad
+                Hacer: ventas3a12 = ventas3a12 + totalMenores
+                Hacer: ventasTotal = ventasTotal + total
+            Fin Caso
+        Según opcion:
+            Caso '2':
+                Escribir: "Control de Boletos"
+                Escribir: totalAcumulado
+                Escribir: totalBltosGral
+                Escribir: totalBltos3Edad
+                Escribir: totalBltos3a12
+                Escribir: totalBltosMenor3
+                Escribir: asientosDisponibles
+                Escribir: "Reporte de Ventas del Dia"
+                Escribir: ventasGral
+                Escribir: ventas3Edad
+                Escribir: ventas3a12
+                Escribir: ventasTotal
+            Fin Caso 
+        Según opcion 
+            Caso '3':
+                Escribir: "SALIENDO DEL SISTEMA DEL TELEFERICO DE MERIDA"
+                Escribir: "Presione la tecla enter para salir."
+                Salir del programa
+            Fin Caso
+
+            Caso contrario:
+                Escribir: "Opcion Invalida."
+    Hasta que opcion = '1' o opcion = '2' o opcion = '3'
+FIN

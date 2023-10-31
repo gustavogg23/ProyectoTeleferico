@@ -290,6 +290,9 @@ Mientras Verdadero hacer:
                 Fin Si
                 Sino:
                     Repetir:
+                        Hacer: cont3a12 = 0
+                        Hacer: contMenor3 = 0
+                        Hacer: bltos3Edad = 0
                         Escribir: "Cuantos boletos desea comprar?"
                         Leer: nroEntrada
 
@@ -346,9 +349,6 @@ Mientras Verdadero hacer:
                         Hacer: bltosGeneral = bltosGeneral - bltos3Edad - bltosMenores
 
                         Si bltosMenores > 0 entonces:
-                            Hacer: cont3a12 = 0
-                            Hacer: contMenor3 = 0
-
                             Para k desde 1 hasta bltosMenores hacer:
                                 Repetir:
                                     Escribir: "Ingrese la edad del niño ", k, ":"
